@@ -17,9 +17,9 @@ INCLUDEPATH += /usr/local/include \
 LIBS += -L/root/mplayer_sysroot/lib \
         -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_imgcodecs -lopencv_videoio
 
-SOURCES += main.cpp         setup.cpp         menu.cpp         fops.cpp         unusual.cpp         steng.cpp
+SOURCES += ConfigManager.cpp VideoWorker.cpp main.cpp         setup.cpp         menu.cpp         fops.cpp         unusual.cpp         steng.cpp
 
-HEADERS  += menu.h         setup.h         fops.h         unusual.h         steng.h
+HEADERS  += ConfigManager.h VideoWorker.h menu.h         setup.h         fops.h         unusual.h         steng.h
 
 FORMS    += menu.ui         setup.ui         fops.ui         unusual.ui
 

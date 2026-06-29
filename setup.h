@@ -4,6 +4,8 @@
 #include <QWidget>
 #include "steng.h"
 #include <QTimer>
+#include <QButtonGroup>
+#include <future>
 
 namespace Ui { class setup; }
 
@@ -51,10 +53,18 @@ private:
     int     m_retainDays;
     int     m_diskFullPolicy;
 
-    void saveStorageConfig();
     void refreshStorageInfo();
     static QString fmtSize(qint64 bytes);
     static qint64 dirSize(const QString &path);
+
+    QButtonGroup *m_navGroup;
+    std::future<void> m_storageFuture;
+
+signals:
+    void dispatchUIUpdate(int totalB, int freeB, int vidB, int phoB, int otherB);
+
+private slots:
+    void onDispatchUIUpdate(int totalB, int freeB, int vidB, int phoB, int otherB);
 };
 
 #endif // SETUP_H

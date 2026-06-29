@@ -1,5 +1,6 @@
 #include "setup.h"
 #include "ui_setup.h"
+#include "ConfigManager.h"
 #include <QDir>
 #include <QFileInfo>
 #include <QFileDialog>
@@ -7,8 +8,7 @@
 #include <QTextStream>
 #include <QDebug>
 #include <sys/statvfs.h>
-
-#define CONFIG_FILE "/opt/aicTrain/sMonitor/sMonitor.cfg"
+#include <thread>
 
 /* ========== 工具 ========== */
 
@@ -42,7 +42,14 @@ setup::setup(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
     setGeometry(0, 0, 1024, 600);
-    selectCategory(0);
+
+    // Convert DOM traversal to QButtonGroup for O(1) state switching
+    m_navGroup = new QButtonGroup(this);
+    m_navGroup->addButton(ui->nav1, 0);
+    m_navGroup->addButton(ui->nav2, 1);
+    m_navGroup->addButton(ui->nav3, 2);
+    m_navGroup->addButton(ui->nav4, 3);
+    m_navGroup->addButton(ui->nav5, 4);
 
     m_presets[0].lr = 60;  m_presets[0].ud = 30;  m_presets[0].enabled = false;
     m_presets[1].lr = 30;  m_presets[1].ud = 90;  m_presets[1].enabled = false;
@@ -58,9 +65,19 @@ setup::setup(QWidget *parent) :
     connect(ui->resetBtRec, SIGNAL(clicked()), this, SLOT(on_resetBtRec_clicked()));
 
     loadStorageConfig();
+
+    // Qt 5.5 cross-thread signal/slot connection instead of lambda invokeMethod
+    qRegisterMetaType<qint64>("qint64");
+    connect(this, SIGNAL(dispatchUIUpdate(int,int,int,int,int)),
+            this, SLOT(onDispatchUIUpdate(int,int,int,int,int)), Qt::QueuedConnection);
+
+    selectCategory(0); // Trigger visual selection after group is setup
 }
 
-setup::~setup() { delete ui; }
+setup::~setup() {
+    if(m_storageFuture.valid()) m_storageFuture.wait();
+    delete ui;
+}
 void setup::on_backBt_clicked() { close(); }
 
 /* ========== 导航 ========== */
@@ -74,20 +91,23 @@ void setup::selectCategory(int index)
            << QString::fromUtf8("录像存储设置") << QString::fromUtf8("网络与设备管理")
            << QString::fromUtf8("用户权限管理");
     ui->rightTitleText->setText(titles[index]);
-    QString sel = "background: #e8f0fe; border: none; text-align: left;"
-                  "font-size: 13px; font-weight: 500; color: #333333; padding-left: 44px;";
-    QPushButton *b = findChild<QPushButton*>(QString("nav%1").arg(index + 1));
-    if (b) b->setStyleSheet(sel);
+
+    QAbstractButton *btn = m_navGroup->button(index);
+    if (btn) {
+        btn->setProperty("navSelected", "true");
+        btn->style()->unpolish(btn);
+        btn->style()->polish(btn);
+    }
+
     if (index == 2) refreshStorageInfo();
 }
 
 void setup::clearSelection()
 {
-    QString n = "background: transparent; border: none; text-align: left;"
-                "font-size: 13px; font-weight: 500; color: #333333; padding-left: 44px;";
-    for (int i = 1; i <= 5; i++) {
-        QPushButton *b = findChild<QPushButton*>(QString("nav%1").arg(i));
-        if (b) b->setStyleSheet(n);
+    for (QAbstractButton *btn : m_navGroup->buttons()) {
+        btn->setProperty("navSelected", "false");
+        btn->style()->unpolish(btn);
+        btn->style()->polish(btn);
     }
 }
 
@@ -144,7 +164,12 @@ void setup::on_ckWall_clicked()      { m_presets[3].enabled = ui->ckWall->isChec
 
 void setup::refreshStorageInfo()
 {
-    /* 1. 磁盘容量 */
+    // If a calculation is already running, avoid starting another one
+    if (m_storageFuture.valid() && m_storageFuture.wait_for(std::chrono::seconds(0)) != std::future_status::ready) {
+        return;
+    }
+
+    /* 1. 磁盘容量 (Fast POSIX syscall) */
     struct statvfs vfs;
     qint64 total = 0, free = 0;
     if (statvfs("/opt/aicTrain/sMonitor", &vfs) == 0) {
@@ -153,14 +178,31 @@ void setup::refreshStorageInfo()
     }
     if (total == 0) return;
 
-    /* 2. 文件扫描 */
-    qint64 vidB = dirSize("/opt/aicTrain/sMonitor/video");
-    qint64 phoB = dirSize("/opt/aicTrain/sMonitor/photo");
-    qint64 used = vidB + phoB;
-    qint64 other = (total - free > used) ? (total - free - used) : 0;
+    ui->totalLabel->setText(QString::fromUtf8("正在扫描文件大小..."));
 
-    /* 3. 总览标签 */
-    int freePct = (int)(free * 100 / total);
+    /* 2. 文件扫描 (Offload to background thread to prevent UI freezing on IO wait) */
+    m_storageFuture = std::async(std::launch::async, [this, total, free]() {
+        qint64 vidB = dirSize("/opt/aicTrain/sMonitor/video");
+        qint64 phoB = dirSize("/opt/aicTrain/sMonitor/photo");
+        qint64 used = vidB + phoB;
+        qint64 other = (total - free > used) ? (total - free - used) : 0;
+
+        // Qt 5.5 compatible cross-thread signal emission
+        // Using int for sizes in MB to avoid QVariant qint64 registration overhead for simple stats
+        emit dispatchUIUpdate((int)(total/1048576), (int)(free/1048576),
+                              (int)(vidB/1048576), (int)(phoB/1048576), (int)(other/1048576));
+    });
+}
+
+void setup::onDispatchUIUpdate(int totalMB, int freeMB, int vidMB, int phoMB, int otherMB)
+{
+    qint64 total = (qint64)totalMB * 1048576;
+    qint64 free = (qint64)freeMB * 1048576;
+    qint64 vidB = (qint64)vidMB * 1048576;
+    qint64 phoB = (qint64)phoMB * 1048576;
+    qint64 other = (qint64)otherMB * 1048576;
+
+    int freePct = total > 0 ? (int)(free * 100 / total) : 0;
     ui->totalLabel->setText(
         QString::fromUtf8("总容量 %1  |  已用 %2  |  剩余 %3 (%4%)")
             .arg(fmtSize(total)).arg(fmtSize(total - free))
@@ -168,9 +210,9 @@ void setup::refreshStorageInfo()
 
     /* 4. 进度条分段宽度 (bar 总宽 690px) */
     int barW = 690;
-    int vidW = (int)((double)vidB / total * barW);
-    int phoW = (int)((double)phoB / total * barW);
-    int othW = (int)((double)other / total * barW);
+    int vidW = total > 0 ? (int)((double)vidB / total * barW) : 0;
+    int phoW = total > 0 ? (int)((double)phoB / total * barW) : 0;
+    int othW = total > 0 ? (int)((double)other / total * barW) : 0;
     int freW = barW - vidW - phoW - othW;
     if (freW < 0) freW = 0;
 
@@ -180,15 +222,18 @@ void setup::refreshStorageInfo()
     ui->freeSeg->setGeometry(24 + vidW + phoW + othW, 66, freW, 14);
 
     /* 动态圆角：左段左圆角 */
-    if (vidW > 0)
-        ui->videoSeg->setStyleSheet("background:#1a7bbd; border-top-left-radius:7px; border-bottom-left-radius:7px;");
-    else
-        ui->videoSeg->setStyleSheet("background:transparent;");
+    if (vidW > 0) {
+        ui->videoSeg->setProperty("hasVideo", "true");
+    } else {
+        ui->videoSeg->setProperty("hasVideo", "false");
+    }
+    ui->videoSeg->style()->unpolish(ui->videoSeg);
+    ui->videoSeg->style()->polish(ui->videoSeg);
 
     /* 5. 图例 */
-    int vidPct = (int)((double)vidB / total * 100);
-    int phoPct = (int)((double)phoB / total * 100);
-    int othPct = (int)((double)other / total * 100);
+    int vidPct = total > 0 ? (int)((double)vidB / total * 100) : 0;
+    int phoPct = total > 0 ? (int)((double)phoB / total * 100) : 0;
+    int othPct = total > 0 ? (int)((double)other / total * 100) : 0;
 
     ui->legendVideo->setText(QString::fromUtf8("录像 %1 (%2%)").arg(fmtSize(vidB)).arg(vidPct));
     ui->legendPhoto->setText(QString::fromUtf8("图片 %1 (%2%)").arg(fmtSize(phoB)).arg(phoPct));
@@ -221,38 +266,18 @@ void setup::on_autoToggle_clicked(bool checked) { m_autoRecord = checked; emit a
 
 void setup::loadStorageConfig()
 {
-    QFile file(CONFIG_FILE);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) return;
-    QTextStream in(&file);
-    while (!in.atEnd()) {
-        QString line = in.readLine().trimmed();
-        if (line.isEmpty() || line.startsWith('#')) continue;
-        int eq = line.indexOf('='); if (eq < 0) continue;
-        QString key = line.left(eq).trimmed(), val = line.mid(eq + 1).trimmed();
-        if (key == "storagePath")    m_storagePath = val;
-        if (key == "autoRecord")     m_autoRecord = (val == "true");
-        if (key == "retainDays")     m_retainDays = val.toInt();
-        if (key == "diskFullPolicy") m_diskFullPolicy = val.toInt();
-    }
-    file.close();
+    // Delegate to Singleton Manager
+    m_storagePath = ConfigManager::instance().storagePath();
+    m_autoRecord = ConfigManager::instance().autoRecord();
+    m_retainDays = ConfigManager::instance().retainDays();
+    m_diskFullPolicy = ConfigManager::instance().diskFullPolicy();
+
     ui->pathInput->setText(m_storagePath);
     ui->autoToggle->setChecked(m_autoRecord);
     int ri = 2;
     switch (m_retainDays) { case 7:ri=0;break; case 15:ri=1;break; case 30:ri=2;break; case 60:ri=3;break; case 90:ri=4;break; }
     ui->retainCombo->setCurrentIndex(ri);
     ui->policyCombo->setCurrentIndex(m_diskFullPolicy);
-}
-
-void setup::saveStorageConfig()
-{
-    QFile file(CONFIG_FILE);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) return;
-    QTextStream out(&file);
-    out << "storagePath=" << m_storagePath << "\n"
-        << "autoRecord=" << (m_autoRecord ? "true" : "false") << "\n"
-        << "retainDays=" << m_retainDays << "\n"
-        << "diskFullPolicy=" << m_diskFullPolicy << "\n";
-    file.close();
 }
 
 void setup::on_saveBtRec_clicked()
@@ -262,7 +287,13 @@ void setup::on_saveBtRec_clicked()
     QStringList rv; rv << "7" << "15" << "30" << "60" << "90";
     m_retainDays = rv[ui->retainCombo->currentIndex()].toInt();
     m_diskFullPolicy = ui->policyCombo->currentIndex();
-    saveStorageConfig();
+
+    // Delegate to Singleton Manager
+    ConfigManager::instance().setStoragePath(m_storagePath);
+    ConfigManager::instance().setAutoRecord(m_autoRecord);
+    ConfigManager::instance().setRetainDays(m_retainDays);
+    ConfigManager::instance().setDiskFullPolicy(m_diskFullPolicy);
+    ConfigManager::instance().saveConfig();
 }
 
 void setup::on_resetBtRec_clicked()

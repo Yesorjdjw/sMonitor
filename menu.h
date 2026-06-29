@@ -5,9 +5,11 @@
 #include <QTimer>
 #include <QPropertyAnimation>
 #include <QDebug>
-#include <opencv2/opencv.hpp>
+#include <QThread>
 #include <fops.h>
 #include "steng.h"
+#include "VideoWorker.h"
+#include "setup.h"
 
 namespace Ui {
 class menu;
@@ -42,25 +44,31 @@ private slots:
     /* 摄像头 */
     void on_get_photo_bt_pressed();
     void on_get_vedio_bt_clicked();
-    void readFrame();
 
-    /* 录像计时 / 时间水印 / 自动录像 */
+    /* 录像计时 / 自动录像 */
     void updateRecTime();
-    void updateClock();
     void onAutoRecordToggled(bool on);
     void onFlashHide();
+
+    /* Worker 信号接收 */
+    void onFrameReady(const QImage &img);
+    void onPhotoSaved(const QString &path);
+    void onRecordingStarted(const QString &path);
+    void onRecordingStopped();
+    void onCameraError(const QString &msg);
 
 private:
     Ui::menu *ui;
     setEng sEng;
 
-    /* OpenCV 摄像头 */
-    QTimer *m_capTimer;
-    cv::VideoCapture m_cap;
-    cv::Mat m_frame;
+    // Single-Instance Lazy Loading for Setup
+    setup *m_setup;
+
+    /* 后台线程与 OpenCV */
+    QThread *m_workerThread;
+    VideoWorker *m_worker;
 
     /* 录像 */
-    cv::VideoWriter m_writer;
     bool m_isRecording;
     QString m_lastVideoPath;
     int m_photoCount;
@@ -69,11 +77,6 @@ private:
     /* 录像计时 */
     QTimer *m_recTimer;
     int     m_recSeconds;
-
-    /* 时间水印 */
-    QTimer *m_clockTimer;
-
-    QString formatTimestamp();
 };
 
 #endif // MENU_H

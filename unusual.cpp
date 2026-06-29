@@ -12,6 +12,15 @@ unusual::unusual(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
     setGeometry(0, 0, 1024, 600);
+
+    // Replace DOM traversal with QButtonGroup
+    m_catGroup = new QButtonGroup(this);
+    m_catGroup->addButton(ui->catBtn1, 0);
+    m_catGroup->addButton(ui->catBtn2, 1);
+    m_catGroup->addButton(ui->catBtn3, 2);
+    m_catGroup->addButton(ui->catBtn4, 3);
+    m_catGroup->addButton(ui->catBtn5, 4);
+
     initTable();
     loadDefaultData();
     selectCategory(0);
@@ -66,15 +75,19 @@ void unusual::selectCategory(int index)
     const CategoryData &cat = m_categories[index];
 
     clearSelection();
-    const QString selStyle =
-        "background: rgba(0,180,255,0.2); border: none; border-radius: 0px;"
-        "text-align: left; font-size: 13px; font-weight: 600;"
-        "color: #333333; padding-left: 52px;";
-    QPushButton *btn = findChild<QPushButton*>(QString("catBtn%1").arg(index + 1));
-    if (btn) btn->setStyleSheet(selStyle);
 
-    QLabel *icon = findChild<QLabel*>(QString("catIcon%1").arg(index + 1));
-    if (icon) icon->raise();
+    QAbstractButton *btn = m_catGroup->button(index);
+    if (btn) {
+        btn->setProperty("catSelected", "true");
+        btn->style()->unpolish(btn);
+        btn->style()->polish(btn);
+    }
+
+    // Manual icon handling (hardcoded to avoid findChild completely)
+    QLabel* icons[] = {ui->catIcon1, ui->catIcon2, ui->catIcon3, ui->catIcon4, ui->catIcon5};
+    if (index >= 0 && index < 5) {
+        icons[index]->raise();
+    }
 
     ui->rightTitleText->setText(cat.name);
     ui->countText->setText(QString("共 %1 条").arg(cat.count));
@@ -122,13 +135,10 @@ void unusual::setupTable(const QList<EventData> &events)
 
 void unusual::clearSelection()
 {
-    const QString normalStyle =
-        "background: transparent; border: none; border-radius: 0px;"
-        "text-align: left; font-size: 13px; font-weight: 600;"
-        "color: #333333; padding-left: 52px;";
-    for (int i = 1; i <= 5; i++) {
-        QPushButton *btn = findChild<QPushButton*>(QString("catBtn%1").arg(i));
-        if (btn) btn->setStyleSheet(normalStyle);
+    for (QAbstractButton *btn : m_catGroup->buttons()) {
+        btn->setProperty("catSelected", "false");
+        btn->style()->unpolish(btn);
+        btn->style()->polish(btn);
     }
 }
 

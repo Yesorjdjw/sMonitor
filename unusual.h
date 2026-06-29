@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QStringList>
+#include <QButtonGroup>
 
 namespace Ui {
 class unusual;
@@ -53,5 +54,7 @@ private:
     void clearSelection();
     void initTable();
     void loadDefaultData();
+
+    QButtonGroup *m_catGroup;
 };
 #endif
