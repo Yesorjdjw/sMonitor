@@ -4,11 +4,20 @@
 #include <QWidget>
 #include <QListWidgetItem>
 #include <QTimer>
+#include <QIcon>
+#include <QFutureWatcher>
 #include <opencv2/opencv.hpp>
 
 namespace Ui {
 class fops;
 }
+
+struct ThumbnailData {
+    QString path;
+    QImage image; // Pass QImage across thread boundary instead of QIcon/QPixmap
+    int type; // 1: Photo, 2: Video
+    bool hasImage; // Indicates if thumbnail was successfully loaded
+};
 
 class fops : public QWidget
 {
@@ -29,6 +38,11 @@ private slots:
     void onFilterVideo();
     void onVideoTick();
 
+    // New slots
+    void onSearchTextChanged(const QString &text);
+    void onRenameFile();
+    void onThumbnailsLoaded();
+
 private:
     Ui::fops *ui;
 
@@ -41,6 +55,9 @@ private:
     cv::VideoCapture *m_vidCap;
     cv::Mat           m_vidFrame;
     bool              m_playing;
+
+    QString           m_searchText;
+    QFutureWatcher<QList<ThumbnailData> > m_thumbWatcher;
 
     void scanFiles();
     void showPreview(const QString &path);

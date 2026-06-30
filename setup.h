@@ -58,7 +58,7 @@ private:
     static qint64 dirSize(const QString &path);
 
     QButtonGroup *m_navGroup;
-    std::future<void> m_storageFuture;
+    QFutureWatcher<void> m_storageWatcher;
 
 signals:
     void dispatchUIUpdate(int totalB, int freeB, int vidB, int phoB, int otherB);

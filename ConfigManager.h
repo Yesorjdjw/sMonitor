@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QObject>
+#include <QReadWriteLock>
 
 class ConfigManager : public QObject
 {
@@ -18,17 +19,17 @@ public:
     void loadConfig();
     void saveConfig();
 
-    QString storagePath() const { return m_storagePath; }
-    void setStoragePath(const QString &path) { m_storagePath = path; }
+    QString storagePath() const { QReadLocker locker(&m_lock); return m_storagePath; }
+    void setStoragePath(const QString &path) { QWriteLocker locker(&m_lock); m_storagePath = path; }
 
-    bool autoRecord() const { return m_autoRecord; }
-    void setAutoRecord(bool record) { m_autoRecord = record; }
+    bool autoRecord() const { QReadLocker locker(&m_lock); return m_autoRecord; }
+    void setAutoRecord(bool record) { QWriteLocker locker(&m_lock); m_autoRecord = record; }
 
-    int retainDays() const { return m_retainDays; }
-    void setRetainDays(int days) { m_retainDays = days; }
+    int retainDays() const { QReadLocker locker(&m_lock); return m_retainDays; }
+    void setRetainDays(int days) { QWriteLocker locker(&m_lock); m_retainDays = days; }
 
-    int diskFullPolicy() const { return m_diskFullPolicy; }
-    void setDiskFullPolicy(int policy) { m_diskFullPolicy = policy; }
+    int diskFullPolicy() const { QReadLocker locker(&m_lock); return m_diskFullPolicy; }
+    void setDiskFullPolicy(int policy) { QWriteLocker locker(&m_lock); m_diskFullPolicy = policy; }
 
 signals:
     void configChanged();
@@ -43,6 +44,8 @@ private:
     bool    m_autoRecord;
     int     m_retainDays;
     int     m_diskFullPolicy;
+
+    mutable QReadWriteLock m_lock;
 };
 
 #endif // CONFIGMANAGER_H

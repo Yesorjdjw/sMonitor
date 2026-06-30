@@ -4,9 +4,59 @@
 #include <QFileInfo>
 #include <QDebug>
 #include <QFile>
+#include <QInputDialog>
+#include <QMessageBox>
+#include <QtConcurrent/QtConcurrent>
 
 #define PHOTO_DIR  "/opt/aicTrain/sMonitor/photo"
 #define VIDEO_DIR  "/opt/aicTrain/sMonitor/video"
+
+static QList<ThumbnailData> generateThumbnailsAsync(const QStringList &photoPaths, const QStringList &videoPaths)
+{
+    QList<ThumbnailData> results;
+
+    // Process Photos (NO QPixmap or QIcon in background thread)
+    for (int i = 0; i < photoPaths.size(); ++i) {
+        ThumbnailData data;
+        data.path = photoPaths[i];
+        data.type = 1;
+        QImage img(data.path);
+        if (!img.isNull()) {
+            // Scale in background to save UI thread time later
+            data.image = img.scaled(80, 60, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            data.hasImage = true;
+        } else {
+            data.hasImage = false;
+        }
+        results.append(data);
+    }
+
+    // Process Videos
+    for (int i = 0; i < videoPaths.size(); ++i) {
+        ThumbnailData data;
+        data.path = videoPaths[i];
+        data.type = 2;
+
+        cv::VideoCapture cap(data.path.toStdString());
+        cv::Mat frame;
+        if (cap.isOpened()) {
+            cap >> frame; // Grab first frame
+            cap.release();
+        }
+
+        if (!frame.empty()) {
+            cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
+            QImage img(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
+            data.image = img.scaled(80, 60, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            data.hasImage = true;
+        } else {
+            data.hasImage = false;
+        }
+        results.append(data);
+    }
+
+    return results;
+}
 
 fops::fops(QWidget *parent) :
     QWidget(parent),
@@ -28,6 +78,11 @@ fops::fops(QWidget *parent) :
     connect(ui->playBtn, SIGNAL(clicked()), this, SLOT(onPlayVideo()));
     connect(ui->delBtn, SIGNAL(clicked()), this, SLOT(onDeleteFile()));
     connect(ui->refreshBtn, SIGNAL(clicked()), this, SLOT(onRefresh()));
+
+    // New connections
+    connect(ui->searchInput, SIGNAL(textChanged(QString)), this, SLOT(onSearchTextChanged(QString)));
+    connect(ui->renameBtn, SIGNAL(clicked()), this, SLOT(onRenameFile()));
+    connect(&m_thumbWatcher, SIGNAL(finished()), this, SLOT(onThumbnailsLoaded()));
 
     ui->hintLabel->hide();
     resetPreview();
@@ -58,8 +113,11 @@ void fops::scanFiles()
         QFileInfoList list = photoDir.entryInfoList(
             QStringList() << "*.jpg" << "*.jpeg" << "*.png" << "*.bmp",
             QDir::Files, QDir::Time);
-        foreach (const QFileInfo &fi, list)
-            m_photoPaths.append(fi.absoluteFilePath());
+        foreach (const QFileInfo &fi, list) {
+            if (m_searchText.isEmpty() || fi.fileName().toLower().contains(m_searchText)) {
+                m_photoPaths.append(fi.absoluteFilePath());
+            }
+        }
     }
 
     QDir videoDir(VIDEO_DIR);
@@ -67,15 +125,22 @@ void fops::scanFiles()
         QFileInfoList list = videoDir.entryInfoList(
             QStringList() << "*.avi" << "*.mp4" << "*.mov",
             QDir::Files, QDir::Time);
-        foreach (const QFileInfo &fi, list)
-            m_videoPaths.append(fi.absoluteFilePath());
+        foreach (const QFileInfo &fi, list) {
+            if (m_searchText.isEmpty() || fi.fileName().toLower().contains(m_searchText)) {
+                m_videoPaths.append(fi.absoluteFilePath());
+            }
+        }
     }
 
     ui->fileList->clear();
 
+    QStringList filteredPhotos;
+    QStringList filteredVideos;
+
     if (m_filter == 0 || m_filter == 1) {
         QIcon photoIcon(":/images/icon_camera.svg");
         foreach (const QString &p, m_photoPaths) {
+            filteredPhotos.append(p);
             QFileInfo fi(p);
             QListWidgetItem *it = new QListWidgetItem(photoIcon, fi.fileName());
             it->setData(Qt::UserRole, p);
@@ -87,6 +152,7 @@ void fops::scanFiles()
     if (m_filter == 0 || m_filter == 2) {
         QIcon videoIcon(":/images/icon_video.svg");
         foreach (const QString &p, m_videoPaths) {
+            filteredVideos.append(p);
             QFileInfo fi(p);
             QListWidgetItem *it = new QListWidgetItem(videoIcon, fi.fileName());
             it->setData(Qt::UserRole, p);
@@ -101,6 +167,36 @@ void fops::scanFiles()
         empty->setFlags(Qt::NoItemFlags);
         empty->setTextAlignment(Qt::AlignCenter);
         ui->fileList->addItem(empty);
+    } else {
+        // Start async thumbnail generation
+        if (!m_thumbWatcher.isRunning()) {
+            QFuture<QList<ThumbnailData> > future = QtConcurrent::run(generateThumbnailsAsync, filteredPhotos, filteredVideos);
+            m_thumbWatcher.setFuture(future);
+        }
+    }
+}
+
+void fops::onThumbnailsLoaded()
+{
+    QList<ThumbnailData> results = m_thumbWatcher.result();
+
+    for (int i = 0; i < ui->fileList->count(); ++i) {
+        QListWidgetItem *item = ui->fileList->item(i);
+        if (!item || item->flags() == Qt::NoItemFlags) continue;
+
+        QString path = item->data(Qt::UserRole).toString();
+
+        // Find matching thumbnail
+        for (int j = 0; j < results.size(); ++j) {
+            if (results[j].path == path) {
+                if (results[j].hasImage) {
+                    // Safe to create QPixmap/QIcon here on the main UI thread
+                    item->setIcon(QIcon(QPixmap::fromImage(results[j].image)));
+                }
+                // If it doesn't have an image, it keeps the default icon set in scanFiles()
+                break;
+            }
+        }
     }
 }
 
@@ -263,11 +359,49 @@ void fops::onDeleteFile()
     scanFiles();
 }
 
+void fops::onRenameFile()
+{
+    if (m_curPath.isEmpty()) return;
+    stopVideo();
+
+    QFileInfo fi(m_curPath);
+    QString oldName = fi.fileName();
+    QString oldBaseName = fi.completeBaseName();
+    QString suffix = fi.suffix();
+    QString dir = fi.absolutePath();
+
+    bool ok;
+    QString newBaseName = QInputDialog::getText(this, QString::fromUtf8("重命名文件"),
+                                                QString::fromUtf8("请输入新文件名:"),
+                                                QLineEdit::Normal,
+                                                oldBaseName, &ok);
+    if (ok && !newBaseName.isEmpty() && newBaseName != oldBaseName) {
+        QString newPath = dir + "/" + newBaseName + "." + suffix;
+        if (QFile::exists(newPath)) {
+            QMessageBox::warning(this, QString::fromUtf8("错误"), QString::fromUtf8("同名文件已存在！"));
+        } else {
+            if (QFile::rename(m_curPath, newPath)) {
+                qDebug() << "Renamed:" << m_curPath << "to" << newPath;
+                m_curPath = newPath;
+                scanFiles(); // Refresh list to show new name
+            } else {
+                QMessageBox::warning(this, QString::fromUtf8("错误"), QString::fromUtf8("重命名失败！"));
+            }
+        }
+    }
+}
+
 void fops::onRefresh()
 {
     stopVideo();
     m_curPath.clear();
     resetPreview();
+    scanFiles();
+}
+
+void fops::onSearchTextChanged(const QString &text)
+{
+    m_searchText = text.trimmed().toLower();
     scanFiles();
 }
 

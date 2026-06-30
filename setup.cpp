@@ -8,7 +8,7 @@
 #include <QTextStream>
 #include <QDebug>
 #include <sys/statvfs.h>
-#include <thread>
+#include <QtConcurrent/QtConcurrent>
 
 /* ========== 工具 ========== */
 
@@ -75,7 +75,7 @@ setup::setup(QWidget *parent) :
 }
 
 setup::~setup() {
-    if(m_storageFuture.valid()) m_storageFuture.wait();
+    m_storageWatcher.waitForFinished();
     delete ui;
 }
 void setup::on_backBt_clicked() { close(); }
@@ -165,7 +165,7 @@ void setup::on_ckWall_clicked()      { m_presets[3].enabled = ui->ckWall->isChec
 void setup::refreshStorageInfo()
 {
     // If a calculation is already running, avoid starting another one
-    if (m_storageFuture.valid() && m_storageFuture.wait_for(std::chrono::seconds(0)) != std::future_status::ready) {
+    if (m_storageWatcher.isRunning()) {
         return;
     }
 
@@ -181,7 +181,8 @@ void setup::refreshStorageInfo()
     ui->totalLabel->setText(QString::fromUtf8("正在扫描文件大小..."));
 
     /* 2. 文件扫描 (Offload to background thread to prevent UI freezing on IO wait) */
-    m_storageFuture = std::async(std::launch::async, [this, total, free]() {
+    // Note: QtConcurrent::run works well for async execution
+    QFuture<void> future = QtConcurrent::run([this, total, free]() {
         qint64 vidB = dirSize("/opt/aicTrain/sMonitor/video");
         qint64 phoB = dirSize("/opt/aicTrain/sMonitor/photo");
         qint64 used = vidB + phoB;
@@ -192,6 +193,8 @@ void setup::refreshStorageInfo()
         emit dispatchUIUpdate((int)(total/1048576), (int)(free/1048576),
                               (int)(vidB/1048576), (int)(phoB/1048576), (int)(other/1048576));
     });
+
+    m_storageWatcher.setFuture(future);
 }
 
 void setup::onDispatchUIUpdate(int totalMB, int freeMB, int vidMB, int phoMB, int otherMB)

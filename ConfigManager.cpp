@@ -23,6 +23,8 @@ void ConfigManager::loadConfig()
         return;
     }
 
+    QWriteLocker locker(&m_lock);
+
     QTextStream in(&file);
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed();
@@ -49,10 +51,15 @@ void ConfigManager::saveConfig()
     }
 
     QTextStream out(&file);
-    out << "storagePath=" << m_storagePath << "\n"
-        << "autoRecord=" << (m_autoRecord ? "true" : "false") << "\n"
-        << "retainDays=" << m_retainDays << "\n"
-        << "diskFullPolicy=" << m_diskFullPolicy << "\n";
+
+    // Create scope for read lock
+    {
+        QReadLocker locker(&m_lock);
+        out << "storagePath=" << m_storagePath << "\n"
+            << "autoRecord=" << (m_autoRecord ? "true" : "false") << "\n"
+            << "retainDays=" << m_retainDays << "\n"
+            << "diskFullPolicy=" << m_diskFullPolicy << "\n";
+    }
 
     // Flush the stream to the QIODevice
     out.flush();
