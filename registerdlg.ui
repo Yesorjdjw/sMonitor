@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RegisterDlg</class>
+ <widget class="QDialog" name="RegisterDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>人脸注册</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+QDialog#RegisterDlg {
+    background-color: #1a1a2e;
+}
+QFrame#cameraFrame {
+    background-color: #000000;
+    border: 2px solid #16213e;
+    border-radius: 8px;
+}
+QLabel#label {
+    color: #ffffff;
+    font-size: 16px;
+    background: transparent;
+}
+QLabel#statusLabel {
+    color: #00ff88;
+    font-size: 18px;
+    font-weight: bold;
+    background: transparent;
+}
+QLabel#progressLabel {
+    color: #ffffff;
+    font-size: 16px;
+    background: transparent;
+}
+QLineEdit#nameEdit {
+    background: #16213e;
+    color: #ffffff;
+    font-size: 18px;
+    border: 2px solid #0f3460;
+    border-radius: 8px;
+    padding: 8px 16px;
+}
+QPushButton#captureBt {
+    background: #e94560;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+}
+QPushButton#captureBt:hover {
+    background: #ff6b6b;
+}
+QPushButton#captureBt:disabled {
+    background: #555555;
+    color: #888888;
+}
+QPushButton#doneBt {
+    background: #0f3460;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid #16213e;
+    border-radius: 8px;
+    padding: 12px 24px;
+}
+QPushButton#doneBt:disabled {
+    background: #555555;
+    color: #888888;
+}
+QPushButton#cancelBt {
+    background: #533483;
+    color: #ffffff;
+    font-size: 16px;
+    border-radius: 8px;
+    padding: 12px 24px;
+}
+QPushButton#confirmBt {
+    background: #0f3460;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+}
+QPushButton#confirmBt:hover {
+    background: #16213e;
+}
+QPushButton#confirmBt:disabled {
+    background: #555555;
+    color: #888888;
+}
+   </string>
+  </property>
+  <widget class="QFrame" name="cameraFrame" native="true">
+   <property name="geometry">
+    <rect>
+     <x>312</x>
+     <y>30</y>
+     <width>400</width>
+     <height>300</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="cameraLabel">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>400</width>
+      <height>300</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>312</x>
+     <y>350</y>
+     <width>100</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>请输入姓名：</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="nameEdit">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>346</y>
+     <width>200</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>输入姓名后拍照</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="confirmBt">
+   <property name="geometry">
+    <rect>
+     <x>628</x>
+     <y>346</y>
+     <width>80</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>确认</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="progressLabel">
+   <property name="geometry">
+    <rect>
+     <x>312</x>
+     <y>400</y>
+     <width>400</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0 / 10 张</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="statusLabel">
+   <property name="geometry">
+    <rect>
+     <x>312</x>
+     <y>430</y>
+     <width>400</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>请面对摄像头</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="captureBt">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>480</y>
+     <width>140</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>拍照</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="doneBt">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>480</y>
+     <width>100</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>完成</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="cancelBt">
+   <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>480</y>
+      <width>100</width>
+      <height>44</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>取消</string>
+    </property>
+   </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

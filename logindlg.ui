@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LoginDlg</class>
+ <widget class="QDialog" name="LoginDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>人脸识别登录</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+QDialog#LoginDlg {
+    background-color: #1a1a2e;
+}
+QFrame#cameraFrame {
+    background-color: #000000;
+    border: 2px solid #16213e;
+    border-radius: 8px;
+}
+QLabel {
+    color: #ffffff;
+    font-size: 16px;
+    background: transparent;
+}
+QPushButton {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+}
+QPushButton#registerBt {
+    background: #0f3460;
+    border: 2px solid #16213e;
+}
+QPushButton#registerBt:hover {
+    background: #16213e;
+}
+QPushButton#retryBt {
+    background: #e94560;
+}
+QPushButton#retryBt:hover {
+    background: #ff6b6b;
+}
+   </string>
+  </property>
+  <widget class="QFrame" name="cameraFrame" native="true">
+   <property name="geometry">
+    <rect>
+     <x>312</x>
+     <y>30</y>
+     <width>400</width>
+     <height>300</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="cameraLabel">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>400</width>
+      <height>300</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="statusLabel">
+   <property name="geometry">
+    <rect>
+     <x>312</x>
+     <y>360</y>
+     <width>400</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>正在扫描人脸...</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 20px; font-weight: bold; color: #00ff88;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="nameLabel">
+   <property name="geometry">
+    <rect>
+     <x>312</x>
+     <y>410</y>
+     <width>400</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 18px; color: #ffffff;</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="registerBt">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>480</y>
+     <width>140</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>注册新用户</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="retryBt">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>480</y>
+     <width>100</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>重试</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

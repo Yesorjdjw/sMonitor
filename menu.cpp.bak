@@ -1,0 +1,214 @@
+#include "unusual.h"
+#include "setup.h"
+#include "menu.h"
+#include "ui_menu.h"
+#include <QDir>
+#include <QDateTime>
+
+bool swt_Control_flag = true;
+
+menu::menu(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::menu),
+    m_isRecording(false),
+    m_photoCount(0),
+    m_videoCount(0)
+{
+    ui->setupUi(this);
+
+    QPalette palette;
+    palette.setBrush(QPalette::Background, QBrush(QPixmap(":/images/menu.jpg")));
+    this->setPalette(palette);
+
+    /* 统一初始状态：显示手动控制面板 */
+    swt_Control_flag = false;
+    ui->swt_Control_bt->setText("切换自动");
+    ui->ctl_Panel_sw->setCurrentIndex(0);
+
+    /* 创建保存目录 */
+    QDir().mkpath("/opt/aicTrain/sMonitor/photo");
+    QDir().mkpath("/opt/aicTrain/sMonitor/video");
+
+    /* 初始化摄像头 */
+    m_capTimer = new QTimer(this);
+    connect(m_capTimer, SIGNAL(timeout()), this, SLOT(readFrame()));
+
+    if (m_cap.open(0)) {
+        qDebug() << "Camera /dev/video0 opened";
+    } else if (m_cap.open("/opt/aicTrain/camCapture/adver.mp4")) {
+        qDebug() << "Fallback: playing adver.mp4";
+    } else {
+        qWarning("menu: no camera source available");
+        return;
+    }
+
+    m_capTimer->start(33);  // ~30 fps
+}
+
+menu::~menu()
+{
+    m_capTimer->stop();
+    if (m_cap.isOpened())
+        m_cap.release();
+    if (m_writer.isOpened())
+        m_writer.release();
+    delete ui;
+}
+
+/* ========== 摄像头帧读取 ========== */
+
+void menu::readFrame()
+{
+    if (!m_cap.isOpened())
+        return;
+
+    m_cap >> m_frame;
+    if (m_frame.empty())
+        return;
+
+    /* 录像写入 */
+    if (m_isRecording && m_writer.isOpened()) {
+        m_writer << m_frame;
+    }
+
+    /* BGR → RGB → QImage → QPixmap → QLabel */
+    cv::cvtColor(m_frame, m_frame, cv::COLOR_BGR2RGB);
+    QImage img(m_frame.data, m_frame.cols, m_frame.rows,
+               m_frame.step, QImage::Format_RGB888);
+    ui->cap_Frame_lb->setPixmap(
+        QPixmap::fromImage(img).scaled(
+            ui->cap_Frame_lb->size(), Qt::KeepAspectRatio));
+}
+
+/* ========== 拍照 ========== */
+
+void menu::on_get_photo_bt_pressed()
+{
+    if (m_frame.empty())
+        return;
+
+    QString path = QString("/opt/aicTrain/sMonitor/photo/%1.jpg")
+                       .arg(QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss"));
+
+    cv::imwrite(path.toStdString(), m_frame);
+    qDebug() << "Photo saved:" << path;
+}
+
+/* ========== 录像 ========== */
+
+void menu::on_get_vedio_bt_clicked()
+{
+    if (!m_isRecording) {
+        /* 开始录制 */
+        if (m_frame.empty())
+            return;
+
+        QString path = QString("/opt/aicTrain/sMonitor/video/%1.avi")
+                           .arg(QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss"));
+
+        m_writer.open(path.toStdString(),
+                      cv::VideoWriter::fourcc('M','J','P','G'),
+                      30,
+                      cv::Size(m_frame.cols, m_frame.rows));
+        if (!m_writer.isOpened()) {
+            qWarning("Failed to open VideoWriter");
+            return;
+        }
+
+        m_isRecording = true;
+        ui->get_vedio_bt->setStyleSheet(
+            "background: rgba(255,59,48,0.5); border: 1px solid rgba(255,59,48,0.8);"
+            "border-radius: 16px;");
+        qDebug() << "Recording started:" << path;
+    } else {
+        /* 停止录制 */
+        m_isRecording = false;
+        m_writer.release();
+        ui->get_vedio_bt->setStyleSheet(
+            "background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);"
+            "border-radius: 16px;");
+        qDebug() << "Recording stopped";
+    }
+}
+
+/* ========== 导航按钮 ========== */
+
+void menu::on_swt_Control_bt_clicked()
+{
+    if (swt_Control_flag) {
+        swt_Control_flag = false;
+        ui->swt_Control_bt->setText("切换手动");
+        ui->ctl_Panel_sw->setCurrentIndex(1);
+    } else {
+        swt_Control_flag = true;
+        ui->swt_Control_bt->setText("切换自动");
+        ui->ctl_Panel_sw->setCurrentIndex(0);
+    }
+}
+
+void menu::on_exp_Check_bt_clicked()
+{
+    unusual *un = new unusual();
+    un->show();
+}
+
+void menu::on_file_Manage_bt_clicked()
+{
+    fops *fo = new fops();
+    fo->show();
+}
+
+void menu::on_mode_Setup_bt_clicked()
+{
+    setup *st = new setup();
+    st->setEngPtr(&sEng);
+    st->show();
+}
+
+/* ========== PTZ 云台 ========== */
+
+void menu::on_turn_up_bt_pressed()
+{
+    sEng.turnUp();
+}
+
+void menu::on_turn_up_bt_released()
+{
+    sEng.stop();
+}
+
+void menu::on_turn_down_bt_pressed()
+{
+    sEng.turnDown();
+}
+
+void menu::on_turn_down_bt_released()
+{
+    sEng.stop();
+}
+
+void menu::on_turn_left_bt_pressed()
+{
+    sEng.turnLeft();
+}
+
+void menu::on_turn_left_bt_released()
+{
+    sEng.stop();
+}
+
+void menu::on_turn_right_bt_pressed()
+{
+    sEng.turnRight();
+}
+
+void menu::on_turn_right_bt_released()
+{
+    sEng.stop();
+}
+
+void menu::on_turn_reset_bt_clicked()
+{
+    sEng.backLrpos();
+    sEng.backUdpos();
+}
