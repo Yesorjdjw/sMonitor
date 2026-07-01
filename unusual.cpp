@@ -11,8 +11,7 @@
 #include <QDir>
 #include <QDebug>
 #include <cstdlib>
-
-#define EVENTS_JSON "/opt/aicTrain/sMonitor/unusual/unusual_events.json"
+#include <QCoreApplication>
 
 unusual::unusual(QWidget *parent) :
     QWidget(parent),
@@ -89,7 +88,8 @@ void unusual::loadDefaultData()
 {
     m_categories.clear();
 
-    QFile file(EVENTS_JSON);
+    QString eventsJsonPath = QCoreApplication::applicationDirPath() + "/unusual/unusual_events.json";
+    QFile file(eventsJsonPath);
     if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << "No unusual events file yet";
         return;

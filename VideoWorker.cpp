@@ -6,10 +6,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QDateTime>
+#include <QCoreApplication>
 #include "ConfigManager.h"
 
-#define OCCLUSION_VIDEO_DIR "/opt/aicTrain/sMonitor/video/unusual"
-#define OCCLUSION_EVENTS_JSON "/opt/aicTrain/sMonitor/unusual/unusual_events.json"
 #define OCCLUSION_DARK_THRESHOLD 30
 #define OCCLUSION_UNIFORM_THRESHOLD 20
 #define OCCLUSION_MIN_FRAMES 10
@@ -39,7 +38,7 @@ void VideoWorker::startCamera()
     for (int ci = 0; ci <= 3; ci++) { if (m_cap.open(ci)) { camOk = true; break; } }
     if (camOk) {
         qDebug() << "VideoWorker: Camera opened";
-    } else if (m_cap.open("/opt/aicTrain/camCapture/adver.mp4")) {
+    } else if (m_cap.open((QCoreApplication::applicationDirPath() + "/camCapture/adver.mp4").toStdString())) {
         qDebug() << "VideoWorker: Fallback: playing adver.mp4";
     } else {
         emit cameraError("no camera source available");
@@ -153,9 +152,10 @@ void VideoWorker::checkOcclusion(const cv::Mat &frame)
 
 void VideoWorker::startOcclusionRecording(const cv::Mat &frame)
 {
-    QDir().mkpath(OCCLUSION_VIDEO_DIR);
+    QString occlusionVideoDir = QCoreApplication::applicationDirPath() + "/video/unusual";
+    QDir().mkpath(occlusionVideoDir);
     m_occlusionVideoPath = QString("%1/occlusion_%2.avi")
-        .arg(OCCLUSION_VIDEO_DIR)
+        .arg(occlusionVideoDir)
         .arg(QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss"));
 
     m_occlusionWriter.open(m_occlusionVideoPath.toStdString(),
@@ -195,8 +195,10 @@ void VideoWorker::saveOcclusionEvent()
         tmpCap.release();
     }
 
+    QString occlusionEventsJson = QCoreApplication::applicationDirPath() + "/unusual/unusual_events.json";
+
     QJsonArray events;
-    QFile file(OCCLUSION_EVENTS_JSON);
+    QFile file(occlusionEventsJson);
     if (file.open(QIODevice::ReadOnly)) {
         events = QJsonDocument::fromJson(file.readAll()).array();
         file.close();
@@ -211,7 +213,7 @@ void VideoWorker::saveOcclusionEvent()
     ev["videoPath"] = m_occlusionVideoPath;
     events.append(ev);
 
-    QDir().mkpath(QFileInfo(OCCLUSION_EVENTS_JSON).absolutePath());
+    QDir().mkpath(QFileInfo(occlusionEventsJson).absolutePath());
     if (file.open(QIODevice::WriteOnly)) {
         file.write(QJsonDocument(events).toJson());
         file.close();
@@ -232,7 +234,7 @@ void VideoWorker::processFrame()
     // 2. Handle Photo Capture
     if (m_takePhotoFlag.exchange(false)) {
         QString storagePath = ConfigManager::instance().storagePath();
-        if (storagePath.isEmpty()) storagePath = "/opt/aicTrain/sMonitor";
+        if (storagePath.isEmpty()) storagePath = QCoreApplication::applicationDirPath();
         QString dirPath = storagePath;
         QDir().mkpath(dirPath);
 
@@ -255,7 +257,7 @@ void VideoWorker::processFrame()
 
         if (!m_writer.isOpened()) {
             QString storagePath = ConfigManager::instance().storagePath();
-            if (storagePath.isEmpty()) storagePath = "/opt/aicTrain/sMonitor/video";
+            if (storagePath.isEmpty()) storagePath = QCoreApplication::applicationDirPath() + "/video";
             QDir().mkpath(storagePath);
             QString path = QString("%1/%2.avi").arg(storagePath)
                 .arg(QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss"));

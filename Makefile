@@ -627,8 +627,7 @@ fileIndex.o: fileIndex.cpp fileIndex.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fileIndex.o fileIndex.cpp
 
 fullShow.o: fullShow.cpp fullShow.h \
-		ui_fullShow.h \
-		click_lable.h
+		ui_fullShow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fullShow.o fullShow.cpp
 
 click_lable.o: click_lable.cpp click_lable.h

@@ -5,8 +5,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDateTime>
-
-#define FACE_DATA_DIR "/opt/aicTrain/sMonitor/facedata"
+#include <QCoreApplication>
 
 RegisterDlg::RegisterDlg(FaceEngine *engine, QWidget *parent)
     : QDialog(parent)
@@ -23,7 +22,7 @@ RegisterDlg::RegisterDlg(FaceEngine *engine, QWidget *parent)
     bool camOk = false;
     for (int ci = 0; ci <= 3; ci++) { if (m_cap.open(ci)) { camOk = true; break; } }
     if (!camOk) {
-        m_cap.open("/opt/aicTrain/camCapture/adver.mp4");
+        m_cap.open((QCoreApplication::applicationDirPath() + "/camCapture/adver.mp4").toStdString());
     }
 
     m_timer = new QTimer(this);
@@ -80,7 +79,8 @@ void RegisterDlg::on_confirmBt_clicked()
 
     m_label = m_engine->maxLabel();
 
-    m_faceDir = QString(FACE_DATA_DIR) + QString("/Faces/s%1").arg(m_label);
+    QString faceDataDir = QCoreApplication::applicationDirPath() + "/facedata";
+    m_faceDir = faceDataDir + QString("/Faces/s%1").arg(m_label);
     QDir().mkpath(m_faceDir);
 
     m_photoCount = 0;
@@ -113,7 +113,8 @@ void RegisterDlg::on_captureBt_clicked()
     ui->progressLabel->setText(QString("%1 / %2").arg(m_photoCount).arg(MAX_PHOTOS));
 
     if (m_photoCount >= MAX_PHOTOS) {
-        QString atPath = QString(FACE_DATA_DIR) + "/Faces/at.txt";
+        QString faceDataDir = QCoreApplication::applicationDirPath() + "/facedata";
+        QString atPath = faceDataDir + "/Faces/at.txt";
         QFile af(atPath);
         if (af.open(QIODevice::Append | QIODevice::Text)) {
             QTextStream out(&af);
@@ -123,7 +124,7 @@ void RegisterDlg::on_captureBt_clicked()
             af.close();
         }
 
-        QString namePath = QString(FACE_DATA_DIR) + "/Faces/name.txt";
+        QString namePath = faceDataDir + "/Faces/name.txt";
         QFile nf(namePath);
         if (nf.open(QIODevice::Append | QIODevice::Text)) {
             QTextStream out(&nf);
@@ -131,7 +132,7 @@ void RegisterDlg::on_captureBt_clicked()
             nf.close();
         }
 
-        m_engine->trainModel(atPath, QString(FACE_DATA_DIR) + "/MyFacePCAModel.xml");
+        m_engine->trainModel(atPath, faceDataDir + "/MyFacePCAModel.xml");
 
         ui->statusLabel->setText(QString::fromUtf8("注册完成！"));
         ui->captureBt->setEnabled(false);

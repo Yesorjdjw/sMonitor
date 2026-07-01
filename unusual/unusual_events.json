@@ -1,74 +1,42 @@
 [
     {
-        "level": "警告",
-        "screenshot": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-022755_thumb.jpg",
+        "screenshot": "/app/video/unusual/mock_event_20260701-140257_thumb.jpg",
+        "type": "画面遮挡",
+        "level": "紧急",
+        "time": "2026-07-01 14:02:57",
         "status": "待处理",
-        "time": "2026-07-01 02:28:00",
-        "type": "人脸识别异常",
-        "videoPath": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-022755.avi"
+        "videoPath": "/app/video/unusual/mock_event_20260701-140257.avi"
     },
     {
-        "level": "警告",
-        "screenshot": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-022859_thumb.jpg",
-        "status": "待处理",
-        "time": "2026-07-01 02:29:04",
+        "screenshot": "/app/video/unusual/mock_event_20260701-135257_thumb.jpg",
         "type": "人脸识别异常",
-        "videoPath": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-022859.avi"
+        "level": "警告",
+        "time": "2026-07-01 13:52:57",
+        "status": "处理中",
+        "videoPath": "/app/video/unusual/mock_event_20260701-135257.avi"
     },
     {
-        "level": "警告",
-        "screenshot": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-022907_thumb.jpg",
-        "status": "待处理",
-        "time": "2026-07-01 02:29:12",
-        "type": "人脸识别异常",
-        "videoPath": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-022907.avi"
+        "screenshot": "/app/video/unusual/mock_event_20260701-134257_thumb.jpg",
+        "type": "画面遮挡",
+        "level": "紧急",
+        "time": "2026-07-01 13:42:57",
+        "status": "已处理",
+        "videoPath": "/app/video/unusual/mock_event_20260701-134257.avi"
     },
     {
-        "level": "警告",
-        "screenshot": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-023226_thumb.jpg",
-        "status": "待处理",
-        "time": "2026-07-01 02:32:31",
+        "screenshot": "/app/video/unusual/mock_event_20260701-133257_thumb.jpg",
         "type": "人脸识别异常",
-        "videoPath": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-023226.avi"
+        "level": "警告",
+        "time": "2026-07-01 13:32:57",
+        "status": "待处理",
+        "videoPath": "/app/video/unusual/mock_event_20260701-133257.avi"
     },
     {
-        "level": "警告",
-        "screenshot": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-023258_thumb.jpg",
+        "screenshot": "/app/video/unusual/mock_event_20260701-132257_thumb.jpg",
+        "type": "画面遮挡",
+        "level": "通知",
+        "time": "2026-07-01 13:22:57",
         "status": "待处理",
-        "time": "2026-07-01 02:33:03",
-        "type": "人脸识别异常",
-        "videoPath": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-023258.avi"
-    },
-    {
-        "level": "警告",
-        "screenshot": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-023356_thumb.jpg",
-        "status": "待处理",
-        "time": "2026-07-01 02:34:33",
-        "type": "人脸识别异常",
-        "videoPath": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-023356.avi"
-    },
-    {
-        "level": "警告",
-        "screenshot": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-023435_thumb.jpg",
-        "status": "待处理",
-        "time": "2026-07-01 02:34:40",
-        "type": "人脸识别异常",
-        "videoPath": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-023435.avi"
-    },
-    {
-        "level": "警告",
-        "screenshot": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-023440_thumb.jpg",
-        "status": "待处理",
-        "time": "2026-07-01 02:34:45",
-        "type": "人脸识别异常",
-        "videoPath": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-023440.avi"
-    },
-    {
-        "level": "警告",
-        "screenshot": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-023446_thumb.jpg",
-        "status": "待处理",
-        "time": "2026-07-01 02:34:51",
-        "type": "人脸识别异常",
-        "videoPath": "/opt/aicTrain/sMonitor/video/unusual/login_anomaly_20260701-023446.avi"
+        "videoPath": "/app/video/unusual/mock_event_20260701-132257.avi"
     }
 ]

@@ -10,12 +10,8 @@
 #include <QJsonObject>
 #include <QDateTime>
 #include <QThread>
+#include <QCoreApplication>
 #include "ConfigManager.h"
-
-#define FACE_DATA_DIR "/opt/aicTrain/sMonitor/facedata"
-#define CASCADE_DIR   "/opt/aicTrain/sMonitor"
-#define UNUSUAL_VIDEO_DIR "/opt/aicTrain/sMonitor/video/unusual"
-#define UNUSUAL_EVENTS_JSON "/opt/aicTrain/sMonitor/unusual/unusual_events.json"
 
 LoginDlg::LoginDlg(QWidget *parent)
     : QDialog(parent)
@@ -32,16 +28,19 @@ LoginDlg::LoginDlg(QWidget *parent)
     setGeometry(0, 0, 1024, 600);
 
     // Initialize face engine
-    m_engine->loadCascades(CASCADE_DIR);
-    m_engine->loadNames(QString(FACE_DATA_DIR) + "/Faces/name.txt");
-    m_engine->loadModel(QString(FACE_DATA_DIR) + "/MyFacePCAModel.xml");
+    QString cascadeDir = QCoreApplication::applicationDirPath();
+    QString faceDataDir = QCoreApplication::applicationDirPath() + "/facedata";
+
+    m_engine->loadCascades(cascadeDir);
+    m_engine->loadNames(faceDataDir + "/Faces/name.txt");
+    m_engine->loadModel(faceDataDir + "/MyFacePCAModel.xml");
 
     // Start camera
     // Try camera indices 0-3
     bool camOk = false;
     for (int ci = 0; ci <= 3; ci++) { if (m_cap.open(ci)) { camOk = true; break; } }
     if (!camOk) {
-        m_cap.open("/opt/aicTrain/camCapture/adver.mp4");
+        m_cap.open((QCoreApplication::applicationDirPath() + "/camCapture/adver.mp4").toStdString());
     }
 
     m_timer = new QTimer(this);
@@ -103,9 +102,10 @@ void LoginDlg::startAnomalyRecording()
 {
     if (m_isRecordingAnomaly) return;
 
-    QDir().mkpath(UNUSUAL_VIDEO_DIR);
+    QString unusualVideoDir = QCoreApplication::applicationDirPath() + "/video/unusual";
+    QDir().mkpath(unusualVideoDir);
     m_anomalyVideoPath = QString("%1/login_anomaly_%2.avi")
-        .arg(UNUSUAL_VIDEO_DIR)
+        .arg(unusualVideoDir)
         .arg(QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss"));
 
     m_anomalyWriter.open(m_anomalyVideoPath.toStdString(),
@@ -130,7 +130,8 @@ void LoginDlg::stopAnomalyRecording()
 
 void LoginDlg::saveAnomalyEvent()
 {
-    QDir().mkpath(QFileInfo(UNUSUAL_EVENTS_JSON).absolutePath());
+    QString unusualEventsJson = QCoreApplication::applicationDirPath() + "/unusual/unusual_events.json";
+    QDir().mkpath(QFileInfo(unusualEventsJson).absolutePath());
 
     // Save thumbnail from video's first frame
     QString thumbPath;
@@ -149,7 +150,7 @@ void LoginDlg::saveAnomalyEvent()
 
     // Load existing events
     QJsonArray events;
-    QFile file(UNUSUAL_EVENTS_JSON);
+    QFile file(unusualEventsJson);
     if (file.open(QIODevice::ReadOnly)) {
         events = QJsonDocument::fromJson(file.readAll()).array();
         file.close();
@@ -289,8 +290,9 @@ void LoginDlg::on_registerBt_clicked()
     {
         RegisterDlg dlg(m_engine, this);
         if (dlg.exec() == QDialog::Accepted) {
-            m_engine->loadNames(QString(FACE_DATA_DIR) + "/Faces/name.txt");
-            m_engine->loadModel(QString(FACE_DATA_DIR) + "/MyFacePCAModel.xml");
+            QString faceDataDir = QCoreApplication::applicationDirPath() + "/facedata";
+            m_engine->loadNames(faceDataDir + "/Faces/name.txt");
+            m_engine->loadModel(faceDataDir + "/MyFacePCAModel.xml");
         }
     } // dlg destroyed here, camera released
 
@@ -302,7 +304,7 @@ void LoginDlg::on_registerBt_clicked()
         QThread::msleep(500);
     }
     if (!opened) {
-        m_cap.open("/opt/aicTrain/camCapture/adver.mp4");
+        m_cap.open((QCoreApplication::applicationDirPath() + "/camCapture/adver.mp4").toStdString());
     }
     m_recognitionFailures = 0;
     setState(SCANNING);
