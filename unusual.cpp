@@ -1,5 +1,6 @@
 #include "unusual.h"
 #include "ui_unusual.h"
+#include "fullShow.h"
 #include <QTableWidgetItem>
 #include <QHeaderView>
 #include <QLabel>
@@ -166,6 +167,7 @@ void unusual::selectCategory(int index)
 
         // Screenshot column
         QLabel *thumbLabel = new QLabel();
+        thumbLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
         if (!e.screenshot.isEmpty() && QFile::exists(e.screenshot)) {
             QPixmap thumb(e.screenshot);
             thumbLabel->setPixmap(thumb.scaled(100, 56, Qt::KeepAspectRatio, Qt::SmoothTransformation));
@@ -220,8 +222,10 @@ void unusual::selectCategory(int index)
         QString videoPath = item->data(Qt::UserRole).toString();
         if (!videoPath.isEmpty() && QFile::exists(videoPath)) {
             qDebug() << "Playing:" << videoPath;
-            QString cmd = QString("mplayer -fs '%1' &").arg(videoPath);
-            system(cmd.toStdString().c_str());
+            fullShow *fs = new fullShow(this);
+            fs->setAttribute(Qt::WA_DeleteOnClose);
+            fs->show_video(videoPath);
+            fs->show();
         }
     });
 }

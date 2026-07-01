@@ -13,7 +13,6 @@
 #define OCCLUSION_DARK_THRESHOLD 30
 #define OCCLUSION_UNIFORM_THRESHOLD 20
 #define OCCLUSION_MIN_FRAMES 10
-#define OCCLUSION_MAX_FRAMES 75  // 5 sec @ 15 fps
 #define OCCLUSION_COOLDOWN_FRAMES 150  // 10 sec cooldown before next detection
 
 VideoWorker::VideoWorker(QObject *parent)
@@ -139,7 +138,7 @@ void VideoWorker::checkOcclusion(const cv::Mat &frame)
         m_occlusionWriter << recFrame;
         m_occlusionFrameCount++;
         // Stop after 5 seconds max, regardless of occlusion state
-        if (m_occlusionFrameCount >= OCCLUSION_MIN_FRAMES + OCCLUSION_MAX_FRAMES) {
+        if (m_occlusionFrameCount >= OCCLUSION_MIN_FRAMES + ConfigManager::OCCLUSION_MAX_FRAMES) {
             stopOcclusionRecording();
             saveOcclusionEvent();
             m_occlusionFrameCount = OCCLUSION_COOLDOWN_FRAMES; // start cooldown
@@ -212,6 +211,7 @@ void VideoWorker::saveOcclusionEvent()
     ev["videoPath"] = m_occlusionVideoPath;
     events.append(ev);
 
+    QDir().mkpath(QFileInfo(OCCLUSION_EVENTS_JSON).absolutePath());
     if (file.open(QIODevice::WriteOnly)) {
         file.write(QJsonDocument(events).toJson());
         file.close();

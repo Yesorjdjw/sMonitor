@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'registerdlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.0
+** Created by: Qt User Interface Compiler version 5.15.13
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,12 +10,9 @@
 #define UI_REGISTERDLG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFrame>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -39,9 +36,9 @@ public:
     void setupUi(QDialog *RegisterDlg)
     {
         if (RegisterDlg->objectName().isEmpty())
-            RegisterDlg->setObjectName(QStringLiteral("RegisterDlg"));
+            RegisterDlg->setObjectName(QString::fromUtf8("RegisterDlg"));
         RegisterDlg->resize(1024, 600);
-        RegisterDlg->setStyleSheet(QLatin1String("\n"
+        RegisterDlg->setStyleSheet(QString::fromUtf8("\n"
 "QDialog#RegisterDlg {\n"
 "    background-color: #1a1a2e;\n"
 "}\n"
@@ -129,39 +126,39 @@ public:
 "}\n"
 "   "));
         cameraFrame = new QFrame(RegisterDlg);
-        cameraFrame->setObjectName(QStringLiteral("cameraFrame"));
+        cameraFrame->setObjectName(QString::fromUtf8("cameraFrame"));
         cameraFrame->setGeometry(QRect(312, 30, 400, 300));
         cameraLabel = new QLabel(cameraFrame);
-        cameraLabel->setObjectName(QStringLiteral("cameraLabel"));
+        cameraLabel->setObjectName(QString::fromUtf8("cameraLabel"));
         cameraLabel->setGeometry(QRect(0, 0, 400, 300));
         cameraLabel->setScaledContents(true);
         cameraLabel->setAlignment(Qt::AlignCenter);
         label = new QLabel(RegisterDlg);
-        label->setObjectName(QStringLiteral("label"));
+        label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(312, 350, 100, 30));
         nameEdit = new QLineEdit(RegisterDlg);
-        nameEdit->setObjectName(QStringLiteral("nameEdit"));
+        nameEdit->setObjectName(QString::fromUtf8("nameEdit"));
         nameEdit->setGeometry(QRect(420, 346, 200, 36));
         confirmBt = new QPushButton(RegisterDlg);
-        confirmBt->setObjectName(QStringLiteral("confirmBt"));
+        confirmBt->setObjectName(QString::fromUtf8("confirmBt"));
         confirmBt->setGeometry(QRect(628, 346, 80, 36));
         progressLabel = new QLabel(RegisterDlg);
-        progressLabel->setObjectName(QStringLiteral("progressLabel"));
+        progressLabel->setObjectName(QString::fromUtf8("progressLabel"));
         progressLabel->setGeometry(QRect(312, 400, 400, 30));
         progressLabel->setAlignment(Qt::AlignCenter);
         statusLabel = new QLabel(RegisterDlg);
-        statusLabel->setObjectName(QStringLiteral("statusLabel"));
+        statusLabel->setObjectName(QString::fromUtf8("statusLabel"));
         statusLabel->setGeometry(QRect(312, 430, 400, 30));
         statusLabel->setAlignment(Qt::AlignCenter);
         captureBt = new QPushButton(RegisterDlg);
-        captureBt->setObjectName(QStringLiteral("captureBt"));
+        captureBt->setObjectName(QString::fromUtf8("captureBt"));
         captureBt->setGeometry(QRect(330, 480, 140, 44));
         doneBt = new QPushButton(RegisterDlg);
-        doneBt->setObjectName(QStringLiteral("doneBt"));
+        doneBt->setObjectName(QString::fromUtf8("doneBt"));
         doneBt->setGeometry(QRect(490, 480, 100, 44));
         doneBt->setEnabled(false);
         cancelBt = new QPushButton(RegisterDlg);
-        cancelBt->setObjectName(QStringLiteral("cancelBt"));
+        cancelBt->setObjectName(QString::fromUtf8("cancelBt"));
         cancelBt->setGeometry(QRect(610, 480, 100, 44));
 
         retranslateUi(RegisterDlg);
@@ -171,16 +168,16 @@ public:
 
     void retranslateUi(QDialog *RegisterDlg)
     {
-        RegisterDlg->setWindowTitle(QApplication::translate("RegisterDlg", "\344\272\272\350\204\270\346\263\250\345\206\214", 0));
+        RegisterDlg->setWindowTitle(QCoreApplication::translate("RegisterDlg", "\344\272\272\350\204\270\346\263\250\345\206\214", nullptr));
         cameraLabel->setText(QString());
-        label->setText(QApplication::translate("RegisterDlg", "\350\257\267\350\276\223\345\205\245\345\247\223\345\220\215\357\274\232", 0));
-        nameEdit->setPlaceholderText(QApplication::translate("RegisterDlg", "\350\276\223\345\205\245\345\247\223\345\220\215\345\220\216\346\213\215\347\205\247", 0));
-        confirmBt->setText(QApplication::translate("RegisterDlg", "\347\241\256\350\256\244", 0));
-        progressLabel->setText(QApplication::translate("RegisterDlg", "0 / 10 \345\274\240", 0));
-        statusLabel->setText(QApplication::translate("RegisterDlg", "\350\257\267\351\235\242\345\257\271\346\221\204\345\203\217\345\244\264", 0));
-        captureBt->setText(QApplication::translate("RegisterDlg", "\346\213\215\347\205\247", 0));
-        doneBt->setText(QApplication::translate("RegisterDlg", "\345\256\214\346\210\220", 0));
-        cancelBt->setText(QApplication::translate("RegisterDlg", "\345\217\226\346\266\210", 0));
+        label->setText(QCoreApplication::translate("RegisterDlg", "\350\257\267\350\276\223\345\205\245\345\247\223\345\220\215\357\274\232", nullptr));
+        nameEdit->setPlaceholderText(QCoreApplication::translate("RegisterDlg", "\350\276\223\345\205\245\345\247\223\345\220\215\345\220\216\346\213\215\347\205\247", nullptr));
+        confirmBt->setText(QCoreApplication::translate("RegisterDlg", "\347\241\256\350\256\244", nullptr));
+        progressLabel->setText(QCoreApplication::translate("RegisterDlg", "0 / 10 \345\274\240", nullptr));
+        statusLabel->setText(QCoreApplication::translate("RegisterDlg", "\350\257\267\351\235\242\345\257\271\346\221\204\345\203\217\345\244\264", nullptr));
+        captureBt->setText(QCoreApplication::translate("RegisterDlg", "\346\213\215\347\205\247", nullptr));
+        doneBt->setText(QCoreApplication::translate("RegisterDlg", "\345\256\214\346\210\220", nullptr));
+        cancelBt->setText(QCoreApplication::translate("RegisterDlg", "\345\217\226\346\266\210", nullptr));
     } // retranslateUi
 
 };

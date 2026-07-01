@@ -30,6 +30,9 @@ public:
     int diskFullPolicy() const { return m_diskFullPolicy; }
     void setDiskFullPolicy(int policy) { m_diskFullPolicy = policy; }
 
+    static constexpr int ANOMALY_RECORD_SECS = 5;
+    static constexpr int OCCLUSION_MAX_FRAMES = 75;
+
 signals:
     void configChanged();
 

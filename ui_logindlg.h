@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'logindlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.0
+** Created by: Qt User Interface Compiler version 5.15.13
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,12 +10,9 @@
 #define UI_LOGINDLG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFrame>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 
@@ -34,9 +31,9 @@ public:
     void setupUi(QDialog *LoginDlg)
     {
         if (LoginDlg->objectName().isEmpty())
-            LoginDlg->setObjectName(QStringLiteral("LoginDlg"));
+            LoginDlg->setObjectName(QString::fromUtf8("LoginDlg"));
         LoginDlg->resize(1024, 600);
-        LoginDlg->setStyleSheet(QLatin1String("\n"
+        LoginDlg->setStyleSheet(QString::fromUtf8("\n"
 "QDialog#LoginDlg {\n"
 "    background-color: #1a1a2e;\n"
 "}\n"
@@ -73,28 +70,28 @@ public:
 "}\n"
 "   "));
         cameraFrame = new QFrame(LoginDlg);
-        cameraFrame->setObjectName(QStringLiteral("cameraFrame"));
+        cameraFrame->setObjectName(QString::fromUtf8("cameraFrame"));
         cameraFrame->setGeometry(QRect(312, 30, 400, 300));
         cameraLabel = new QLabel(cameraFrame);
-        cameraLabel->setObjectName(QStringLiteral("cameraLabel"));
+        cameraLabel->setObjectName(QString::fromUtf8("cameraLabel"));
         cameraLabel->setGeometry(QRect(0, 0, 400, 300));
         cameraLabel->setScaledContents(true);
         cameraLabel->setAlignment(Qt::AlignCenter);
         statusLabel = new QLabel(LoginDlg);
-        statusLabel->setObjectName(QStringLiteral("statusLabel"));
+        statusLabel->setObjectName(QString::fromUtf8("statusLabel"));
         statusLabel->setGeometry(QRect(312, 360, 400, 40));
         statusLabel->setAlignment(Qt::AlignCenter);
-        statusLabel->setStyleSheet(QStringLiteral("font-size: 20px; font-weight: bold; color: #00ff88;"));
+        statusLabel->setStyleSheet(QString::fromUtf8("font-size: 20px; font-weight: bold; color: #00ff88;"));
         nameLabel = new QLabel(LoginDlg);
-        nameLabel->setObjectName(QStringLiteral("nameLabel"));
+        nameLabel->setObjectName(QString::fromUtf8("nameLabel"));
         nameLabel->setGeometry(QRect(312, 410, 400, 40));
         nameLabel->setAlignment(Qt::AlignCenter);
-        nameLabel->setStyleSheet(QStringLiteral("font-size: 18px; color: #ffffff;"));
+        nameLabel->setStyleSheet(QString::fromUtf8("font-size: 18px; color: #ffffff;"));
         registerBt = new QPushButton(LoginDlg);
-        registerBt->setObjectName(QStringLiteral("registerBt"));
+        registerBt->setObjectName(QString::fromUtf8("registerBt"));
         registerBt->setGeometry(QRect(330, 480, 140, 44));
         retryBt = new QPushButton(LoginDlg);
-        retryBt->setObjectName(QStringLiteral("retryBt"));
+        retryBt->setObjectName(QString::fromUtf8("retryBt"));
         retryBt->setGeometry(QRect(490, 480, 100, 44));
 
         retranslateUi(LoginDlg);
@@ -104,12 +101,12 @@ public:
 
     void retranslateUi(QDialog *LoginDlg)
     {
-        LoginDlg->setWindowTitle(QApplication::translate("LoginDlg", "\344\272\272\350\204\270\350\257\206\345\210\253\347\231\273\345\275\225", 0));
+        LoginDlg->setWindowTitle(QCoreApplication::translate("LoginDlg", "\344\272\272\350\204\270\350\257\206\345\210\253\347\231\273\345\275\225", nullptr));
         cameraLabel->setText(QString());
-        statusLabel->setText(QApplication::translate("LoginDlg", "\346\255\243\345\234\250\346\211\253\346\217\217\344\272\272\350\204\270...", 0));
+        statusLabel->setText(QCoreApplication::translate("LoginDlg", "\346\255\243\345\234\250\346\211\253\346\217\217\344\272\272\350\204\270...", nullptr));
         nameLabel->setText(QString());
-        registerBt->setText(QApplication::translate("LoginDlg", "\346\263\250\345\206\214\346\226\260\347\224\250\346\210\267", 0));
-        retryBt->setText(QApplication::translate("LoginDlg", "\351\207\215\350\257\225", 0));
+        registerBt->setText(QCoreApplication::translate("LoginDlg", "\346\263\250\345\206\214\346\226\260\347\224\250\346\210\267", nullptr));
+        retryBt->setText(QCoreApplication::translate("LoginDlg", "\351\207\215\350\257\225", nullptr));
     } // retranslateUi
 
 };

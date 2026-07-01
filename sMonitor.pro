@@ -14,6 +14,7 @@ TARGET = sMonitor
 TEMPLATE = app
 
 INCLUDEPATH += /usr/local/include \
+               /usr/include/opencv4 \
                /opt/wkspace/opencv-3.4.1/build
 
 LIBS += -L/root/mplayer_sysroot/lib \

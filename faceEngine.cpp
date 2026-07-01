@@ -2,6 +2,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
+#include <fstream>
 
 FaceEngine::FaceEngine(QObject *parent)
     : QObject(parent)

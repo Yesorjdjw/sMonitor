@@ -10,12 +10,12 @@
 #include <QJsonObject>
 #include <QDateTime>
 #include <QThread>
+#include "ConfigManager.h"
 
 #define FACE_DATA_DIR "/opt/aicTrain/sMonitor/facedata"
 #define CASCADE_DIR   "/opt/aicTrain/sMonitor"
 #define UNUSUAL_VIDEO_DIR "/opt/aicTrain/sMonitor/video/unusual"
 #define UNUSUAL_EVENTS_JSON "/opt/aicTrain/sMonitor/unusual/unusual_events.json"
-#define ANOMALY_RECORD_SECS 5
 
 LoginDlg::LoginDlg(QWidget *parent)
     : QDialog(parent)
@@ -265,7 +265,7 @@ void LoginDlg::onFrameCaptured()
         m_anomalyFrames++;
 
         // Record for ~5 seconds (15 fps * 5 = 75 frames)
-        if (m_anomalyFrames >= 15 * ANOMALY_RECORD_SECS) {
+        if (m_anomalyFrames >= 15 * ConfigManager::ANOMALY_RECORD_SECS) {
             stopAnomalyRecording();
             saveAnomalyEvent();
         }

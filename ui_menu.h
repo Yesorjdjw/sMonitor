@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'menu.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.0
+** Created by: Qt User Interface Compiler version 5.15.13
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,10 +10,8 @@
 #define UI_MENU_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStackedWidget>
@@ -50,7 +48,7 @@ public:
     void setupUi(QWidget *menu)
     {
         if (menu->objectName().isEmpty())
-            menu->setObjectName(QStringLiteral("menu"));
+            menu->setObjectName(QString::fromUtf8("menu"));
         menu->resize(1024, 600);
         menu->setStyleSheet(QString::fromUtf8("\n"
 "/* ===== \345\205\250\345\261\200 ===== */\n"
@@ -172,120 +170,120 @@ public:
 "}\n"
 "   "));
         cap_Frame_lb = new QLabel(menu);
-        cap_Frame_lb->setObjectName(QStringLiteral("cap_Frame_lb"));
+        cap_Frame_lb->setObjectName(QString::fromUtf8("cap_Frame_lb"));
         cap_Frame_lb->setGeometry(QRect(20, 68, 654, 362));
         timeWatermark_lb = new QLabel(menu);
-        timeWatermark_lb->setObjectName(QStringLiteral("timeWatermark_lb"));
+        timeWatermark_lb->setObjectName(QString::fromUtf8("timeWatermark_lb"));
         timeWatermark_lb->setGeometry(QRect(344, 76, 330, 28));
         timeWatermark_lb->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
         camLabel_lb = new QLabel(menu);
-        camLabel_lb->setObjectName(QStringLiteral("camLabel_lb"));
+        camLabel_lb->setObjectName(QString::fromUtf8("camLabel_lb"));
         camLabel_lb->setGeometry(QRect(32, 396, 64, 24));
         camLabel_lb->setAlignment(Qt::AlignCenter);
         noSignal_lb = new QLabel(menu);
-        noSignal_lb->setObjectName(QStringLiteral("noSignal_lb"));
+        noSignal_lb->setObjectName(QString::fromUtf8("noSignal_lb"));
         noSignal_lb->setGeometry(QRect(20, 68, 654, 362));
         noSignal_lb->setAlignment(Qt::AlignCenter);
         flashOverlay_lb = new QLabel(menu);
-        flashOverlay_lb->setObjectName(QStringLiteral("flashOverlay_lb"));
+        flashOverlay_lb->setObjectName(QString::fromUtf8("flashOverlay_lb"));
         flashOverlay_lb->setGeometry(QRect(20, 68, 654, 362));
         ctl_Panel_sw = new QStackedWidget(menu);
-        ctl_Panel_sw->setObjectName(QStringLiteral("ctl_Panel_sw"));
+        ctl_Panel_sw->setObjectName(QString::fromUtf8("ctl_Panel_sw"));
         ctl_Panel_sw->setGeometry(QRect(700, 70, 314, 362));
         page = new QWidget();
-        page->setObjectName(QStringLiteral("page"));
+        page->setObjectName(QString::fromUtf8("page"));
         turn_up_bt = new QPushButton(page);
-        turn_up_bt->setObjectName(QStringLiteral("turn_up_bt"));
+        turn_up_bt->setObjectName(QString::fromUtf8("turn_up_bt"));
         turn_up_bt->setGeometry(QRect(120, 22, 74, 54));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/images/icon_up.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/images/icon_up.svg"), QSize(), QIcon::Normal, QIcon::Off);
         turn_up_bt->setIcon(icon);
         turn_up_bt->setIconSize(QSize(20, 20));
         turn_left_bt = new QPushButton(page);
-        turn_left_bt->setObjectName(QStringLiteral("turn_left_bt"));
+        turn_left_bt->setObjectName(QString::fromUtf8("turn_left_bt"));
         turn_left_bt->setGeometry(QRect(36, 94, 74, 54));
         QIcon icon1;
-        icon1.addFile(QStringLiteral(":/images/icon_left.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8(":/images/icon_left.svg"), QSize(), QIcon::Normal, QIcon::Off);
         turn_left_bt->setIcon(icon1);
         turn_left_bt->setIconSize(QSize(20, 20));
         turn_reset_bt = new QPushButton(page);
-        turn_reset_bt->setObjectName(QStringLiteral("turn_reset_bt"));
+        turn_reset_bt->setObjectName(QString::fromUtf8("turn_reset_bt"));
         turn_reset_bt->setGeometry(QRect(120, 94, 74, 54));
         QIcon icon2;
-        icon2.addFile(QStringLiteral(":/images/icon_center.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8(":/images/icon_center.svg"), QSize(), QIcon::Normal, QIcon::Off);
         turn_reset_bt->setIcon(icon2);
         turn_reset_bt->setIconSize(QSize(20, 20));
         turn_right_bt = new QPushButton(page);
-        turn_right_bt->setObjectName(QStringLiteral("turn_right_bt"));
+        turn_right_bt->setObjectName(QString::fromUtf8("turn_right_bt"));
         turn_right_bt->setGeometry(QRect(204, 94, 74, 54));
         QIcon icon3;
-        icon3.addFile(QStringLiteral(":/images/icon_right.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon3.addFile(QString::fromUtf8(":/images/icon_right.svg"), QSize(), QIcon::Normal, QIcon::Off);
         turn_right_bt->setIcon(icon3);
         turn_right_bt->setIconSize(QSize(20, 20));
         turn_down_bt = new QPushButton(page);
-        turn_down_bt->setObjectName(QStringLiteral("turn_down_bt"));
+        turn_down_bt->setObjectName(QString::fromUtf8("turn_down_bt"));
         turn_down_bt->setGeometry(QRect(120, 166, 74, 54));
         QIcon icon4;
-        icon4.addFile(QStringLiteral(":/images/icon_down.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon4.addFile(QString::fromUtf8(":/images/icon_down.svg"), QSize(), QIcon::Normal, QIcon::Off);
         turn_down_bt->setIcon(icon4);
         turn_down_bt->setIconSize(QSize(20, 20));
         sepLine = new QLabel(page);
-        sepLine->setObjectName(QStringLiteral("sepLine"));
+        sepLine->setObjectName(QString::fromUtf8("sepLine"));
         sepLine->setGeometry(QRect(24, 240, 266, 1));
-        sepLine->setStyleSheet(QStringLiteral("background: rgba(255,255,255,0.08);"));
+        sepLine->setStyleSheet(QString::fromUtf8("background: rgba(255,255,255,0.08);"));
         get_photo_bt = new QPushButton(page);
-        get_photo_bt->setObjectName(QStringLiteral("get_photo_bt"));
+        get_photo_bt->setObjectName(QString::fromUtf8("get_photo_bt"));
         get_photo_bt->setGeometry(QRect(46, 264, 94, 72));
         QIcon icon5;
-        icon5.addFile(QStringLiteral(":/images/icon_camera.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon5.addFile(QString::fromUtf8(":/images/icon_camera.svg"), QSize(), QIcon::Normal, QIcon::Off);
         get_photo_bt->setIcon(icon5);
         get_photo_bt->setIconSize(QSize(24, 24));
         get_vedio_bt = new QPushButton(page);
-        get_vedio_bt->setObjectName(QStringLiteral("get_vedio_bt"));
+        get_vedio_bt->setObjectName(QString::fromUtf8("get_vedio_bt"));
         get_vedio_bt->setGeometry(QRect(164, 264, 110, 72));
         QIcon icon6;
-        icon6.addFile(QStringLiteral(":/images/icon_video.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon6.addFile(QString::fromUtf8(":/images/icon_video.svg"), QSize(), QIcon::Normal, QIcon::Off);
         get_vedio_bt->setIcon(icon6);
         get_vedio_bt->setIconSize(QSize(24, 24));
         recTime_lb = new QLabel(page);
-        recTime_lb->setObjectName(QStringLiteral("recTime_lb"));
+        recTime_lb->setObjectName(QString::fromUtf8("recTime_lb"));
         recTime_lb->setGeometry(QRect(174, 338, 94, 22));
         recTime_lb->setAlignment(Qt::AlignCenter);
         ctl_Panel_sw->addWidget(page);
         page_2 = new QWidget();
-        page_2->setObjectName(QStringLiteral("page_2"));
+        page_2->setObjectName(QString::fromUtf8("page_2"));
         label_2 = new QLabel(page_2);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(82, 140, 150, 50));
-        label_2->setStyleSheet(QStringLiteral("color: rgba(255,255,255,0.6); font-size: 14px; font-weight: 400; background: transparent;"));
+        label_2->setStyleSheet(QString::fromUtf8("color: rgba(255,255,255,0.6); font-size: 14px; font-weight: 400; background: transparent;"));
         label_2->setAlignment(Qt::AlignCenter);
         ctl_Panel_sw->addWidget(page_2);
         swt_Control_bt = new QPushButton(menu);
-        swt_Control_bt->setObjectName(QStringLiteral("swt_Control_bt"));
+        swt_Control_bt->setObjectName(QString::fromUtf8("swt_Control_bt"));
         swt_Control_bt->setGeometry(QRect(20, 450, 231, 128));
         QIcon icon7;
-        icon7.addFile(QStringLiteral(":/images/icon_switch.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon7.addFile(QString::fromUtf8(":/images/icon_switch.svg"), QSize(), QIcon::Normal, QIcon::Off);
         swt_Control_bt->setIcon(icon7);
         swt_Control_bt->setIconSize(QSize(24, 24));
         exp_Check_bt = new QPushButton(menu);
-        exp_Check_bt->setObjectName(QStringLiteral("exp_Check_bt"));
+        exp_Check_bt->setObjectName(QString::fromUtf8("exp_Check_bt"));
         exp_Check_bt->setGeometry(QRect(267, 450, 231, 128));
         QIcon icon8;
-        icon8.addFile(QStringLiteral(":/images/icon_alarm.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon8.addFile(QString::fromUtf8(":/images/icon_alarm.svg"), QSize(), QIcon::Normal, QIcon::Off);
         exp_Check_bt->setIcon(icon8);
         exp_Check_bt->setIconSize(QSize(24, 24));
         file_Manage_bt = new QPushButton(menu);
-        file_Manage_bt->setObjectName(QStringLiteral("file_Manage_bt"));
+        file_Manage_bt->setObjectName(QString::fromUtf8("file_Manage_bt"));
         file_Manage_bt->setGeometry(QRect(514, 450, 231, 128));
         QIcon icon9;
-        icon9.addFile(QStringLiteral(":/images/icon_folder.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon9.addFile(QString::fromUtf8(":/images/icon_folder.svg"), QSize(), QIcon::Normal, QIcon::Off);
         file_Manage_bt->setIcon(icon9);
         file_Manage_bt->setIconSize(QSize(24, 24));
         mode_Setup_bt = new QPushButton(menu);
-        mode_Setup_bt->setObjectName(QStringLiteral("mode_Setup_bt"));
+        mode_Setup_bt->setObjectName(QString::fromUtf8("mode_Setup_bt"));
         mode_Setup_bt->setGeometry(QRect(760, 450, 243, 128));
         QIcon icon10;
-        icon10.addFile(QStringLiteral(":/images/icon_settings.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon10.addFile(QString::fromUtf8(":/images/icon_settings.svg"), QSize(), QIcon::Normal, QIcon::Off);
         mode_Setup_bt->setIcon(icon10);
         mode_Setup_bt->setIconSize(QSize(24, 24));
 
@@ -299,11 +297,11 @@ public:
 
     void retranslateUi(QWidget *menu)
     {
-        menu->setWindowTitle(QApplication::translate("menu", "\345\260\217\350\232\201\346\231\272\350\203\275\345\256\211\351\230\262\347\263\273\347\273\237", 0));
+        menu->setWindowTitle(QCoreApplication::translate("menu", "\345\260\217\350\232\201\346\231\272\350\203\275\345\256\211\351\230\262\347\263\273\347\273\237", nullptr));
         cap_Frame_lb->setText(QString());
-        timeWatermark_lb->setText(QApplication::translate("menu", "2026-06-29 \346\230\237\346\234\237\344\270\200 13:53:44", 0));
-        camLabel_lb->setText(QApplication::translate("menu", "CAM 01", 0));
-        noSignal_lb->setText(QApplication::translate("menu", "\346\232\202\346\227\240\350\247\206\351\242\221\344\277\241\345\217\267", 0));
+        timeWatermark_lb->setText(QCoreApplication::translate("menu", "2026-06-29 \346\230\237\346\234\237\344\270\200 13:53:44", nullptr));
+        camLabel_lb->setText(QCoreApplication::translate("menu", "CAM 01", nullptr));
+        noSignal_lb->setText(QCoreApplication::translate("menu", "\346\232\202\346\227\240\350\247\206\351\242\221\344\277\241\345\217\267", nullptr));
         flashOverlay_lb->setText(QString());
         turn_up_bt->setText(QString());
         turn_left_bt->setText(QString());
@@ -313,12 +311,12 @@ public:
         sepLine->setText(QString());
         get_photo_bt->setText(QString());
         get_vedio_bt->setText(QString());
-        recTime_lb->setText(QApplication::translate("menu", "00:00", 0));
-        label_2->setText(QApplication::translate("menu", "\346\211\213\345\212\250\346\216\247\345\210\266", 0));
-        swt_Control_bt->setText(QApplication::translate("menu", "\345\210\207\346\215\242\350\207\252\345\212\250", 0));
-        exp_Check_bt->setText(QApplication::translate("menu", "\345\274\202\345\270\270\346\237\245\347\234\213", 0));
-        file_Manage_bt->setText(QApplication::translate("menu", "\346\226\207\344\273\266\347\256\241\347\220\206", 0));
-        mode_Setup_bt->setText(QApplication::translate("menu", "\346\250\241\345\274\217\350\256\276\347\275\256", 0));
+        recTime_lb->setText(QCoreApplication::translate("menu", "00:00", nullptr));
+        label_2->setText(QCoreApplication::translate("menu", "\346\211\213\345\212\250\346\216\247\345\210\266", nullptr));
+        swt_Control_bt->setText(QCoreApplication::translate("menu", "\345\210\207\346\215\242\350\207\252\345\212\250", nullptr));
+        exp_Check_bt->setText(QCoreApplication::translate("menu", "\345\274\202\345\270\270\346\237\245\347\234\213", nullptr));
+        file_Manage_bt->setText(QCoreApplication::translate("menu", "\346\226\207\344\273\266\347\256\241\347\220\206", nullptr));
+        mode_Setup_bt->setText(QCoreApplication::translate("menu", "\346\250\241\345\274\217\350\256\276\347\275\256", nullptr));
     } // retranslateUi
 
 };

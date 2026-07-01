@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'fullShow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.0
+** Created by: Qt User Interface Compiler version 5.15.13
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,10 +10,7 @@
 #define UI_FULLSHOW_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QWidget>
 #include "click_lable.h"
@@ -29,14 +26,14 @@ public:
     void setupUi(QMainWindow *fullShow)
     {
         if (fullShow->objectName().isEmpty())
-            fullShow->setObjectName(QStringLiteral("fullShow"));
+            fullShow->setObjectName(QString::fromUtf8("fullShow"));
         fullShow->resize(1024, 600);
         fullShow->setMinimumSize(QSize(1024, 600));
         fullShow->setMaximumSize(QSize(1024, 600));
         centralwidget = new QWidget(fullShow);
-        centralwidget->setObjectName(QStringLiteral("centralwidget"));
+        centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         label = new click_lable(centralwidget);
-        label->setObjectName(QStringLiteral("label"));
+        label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(0, 0, 1024, 600));
         label->setMinimumSize(QSize(1024, 600));
         label->setMaximumSize(QSize(1024, 600));
@@ -49,7 +46,7 @@ public:
 
     void retranslateUi(QMainWindow *fullShow)
     {
-        fullShow->setWindowTitle(QApplication::translate("fullShow", "MainWindow", 0));
+        fullShow->setWindowTitle(QCoreApplication::translate("fullShow", "MainWindow", nullptr));
         label->setText(QString());
     } // retranslateUi
 
