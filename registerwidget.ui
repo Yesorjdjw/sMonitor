@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RegisterWidget</class>
+ <widget class="QDialog" name="RegisterWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>380</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>注册新账号</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog { background-color: #f5f6f8; }</string>
+  </property>
+  <layout class="QVBoxLayout" name="rootLayout">
+   <property name="leftMargin">
+    <number>30</number>
+   </property>
+   <property name="topMargin">
+    <number>24</number>
+   </property>
+   <property name="rightMargin">
+    <number>30</number>
+   </property>
+   <property name="bottomMargin">
+    <number>20</number>
+   </property>
+   <property name="spacing">
+    <number>14</number>
+   </property>
+   <!-- Title -->
+   <item alignment="Qt::AlignCenter">
+    <widget class="QLabel" name="titleLabel">
+     <property name="text">
+      <string>注册新账号</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font-size: 20px; font-weight: bold; color: #2c3e50; padding: 8px; background: transparent;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="titleSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>8</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <!-- Username -->
+   <item>
+    <layout class="QHBoxLayout" name="userLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="userIcon">
+       <property name="fixedSize">
+        <size>
+         <width>40</width>
+         <height>42</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>@</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: #d0d5db; border-radius: 6px 0 0 6px; font-size: 16px;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="usernameInput">
+       <property name="placeholderText">
+        <string>请输入账号（4-20位）</string>
+       </property>
+
+       <property name="maxLength">
+        <number>20</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit {
+  border: 1px solid #d0d5db;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  font-size: 14px;
+}
+QLineEdit:focus {
+  border-color: #4a90d9;
+  background-color: #ffffff;
+}</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <!-- Password -->
+   <item>
+    <layout class="QHBoxLayout" name="passLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="passIcon">
+       <property name="fixedSize">
+        <size>
+         <width>40</width>
+         <height>42</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>*</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: #d0d5db; border-radius: 6px 0 0 6px; font-size: 16px;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="passwordInput">
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+       <property name="placeholderText">
+        <string>请输入密码（6-20位）</string>
+       </property>
+
+       <property name="maxLength">
+        <number>20</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit {
+  border: 1px solid #d0d5db;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  font-size: 14px;
+}
+QLineEdit:focus {
+  border-color: #4a90d9;
+  background-color: #ffffff;
+}</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <!-- Confirm Password -->
+   <item>
+    <layout class="QHBoxLayout" name="confirmLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="confirmIcon">
+       <property name="fixedSize">
+        <size>
+         <width>40</width>
+         <height>42</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>#</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: #d0d5db; border-radius: 6px 0 0 6px; font-size: 16px;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="confirmInput">
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+       <property name="placeholderText">
+        <string>请再次输入密码</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit {
+  border: 1px solid #d0d5db;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  font-size: 14px;
+}
+QLineEdit:focus {
+  border-color: #4a90d9;
+  background-color: #ffffff;
+}</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <!-- Role selector -->
+   <item>
+    <layout class="QHBoxLayout" name="roleLayout">
+     <property name="spacing">
+      <number>12</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="roleLabel">
+       <property name="text">
+        <string>角色权限：</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-size: 14px; color: #5a6a8a; background: transparent;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="roleCombo">
+       <property name="minimumWidth">
+        <number>140</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QComboBox {
+  border: 1px solid #d0d5db;
+  border-radius: 6px;
+  padding: 6px 12px;
+  background-color: #f8f9fa;
+  font-size: 14px;
+}
+QComboBox:focus { border-color: #4a90d9; }
+QComboBox::drop-down { border: none; width: 24px; }
+QComboBox QAbstractItemView {
+  border: 1px solid #d0d5db;
+  background: white;
+  selection-background-color: #d4e4f7;
+}</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>操作员</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>管理员</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="roleSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <!-- Status -->
+   <item alignment="Qt::AlignCenter">
+    <widget class="QLabel" name="statusLabel">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: #e74c3c; font-size: 13px; background: transparent;</string>
+     </property>
+    </widget>
+   </item>
+   <!-- Buttons -->
+   <item>
+    <layout class="QHBoxLayout" name="btnLayout">
+     <property name="spacing">
+      <number>16</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="registerBtn">
+       <property name="text">
+        <string>确认注册</string>
+       </property>
+       <property name="minimumHeight">
+        <number>42</number>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+  background-color: #4a90d9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+}
+QPushButton:hover {
+  background-color: #3a7bc8;
+}
+QPushButton:pressed {
+  background-color: #2a6ab8;
+}</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelBtn">
+       <property name="text">
+        <string>取  消</string>
+       </property>
+       <property name="minimumHeight">
+        <number>42</number>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+  background-color: #e8ecf0;
+  color: #2c3e50;
+  border: 1px solid #d0d5db;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+}
+QPushButton:hover {
+  background-color: #dce0e6;
+  border-color: #b8bfc7;
+}
+QPushButton:pressed {
+  background-color: #d0d5db;
+}</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

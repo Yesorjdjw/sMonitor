@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>安防管理系统</string>
+  </property>
+  <property name="windowFlags">
+   <set>Qt::FramelessWindowHint</set>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="centralLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <!-- Nav Bar -->
+    <item>
+     <widget class="QWidget" name="navBar" native="true">
+      <property name="fixedHeight">
+       <number>80</number>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #e8f0fe; border-bottom: 1px solid #d0d9e8;</string>
+      </property>
+      <layout class="QHBoxLayout" name="navLayout">
+       <property name="leftMargin">
+        <number>16</number>
+       </property>
+       <property name="rightMargin">
+        <number>16</number>
+       </property>
+       <property name="spacing">
+        <number>4</number>
+       </property>
+       <!-- Logo + System Name -->
+       <item>
+        <layout class="QHBoxLayout" name="logoArea">
+         <property name="spacing">
+          <number>8</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="logoLabel">
+           <property name="fixedSize">
+            <size>
+             <width>36</width>
+             <height>36</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="sysNameLabel">
+           <property name="text">
+            <string>安防管理系统</string>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">font-size: 20px; font-weight: bold; color: #1a3a6a; background: transparent;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="navLeftSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <!-- Tab Buttons -->
+       <item>
+        <widget class="QPushButton" name="tabMonitor">
+         <property name="text">
+          <string>实时监控</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+  background-color: transparent;
+  color: #5a6a8a;
+  font-size: 15px;
+  padding: 16px 18px;
+  border: none;
+  border-bottom: 3px solid transparent;
+}
+QPushButton:hover {
+  color: #1a3a6a;
+  background-color: rgba(74,144,217,0.08);
+}
+QPushButton:checked {
+  color: #1a3a6a;
+  font-weight: bold;
+  border-bottom: 3px solid #4a90d9;
+}</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="tabFiles">
+         <property name="text">
+          <string>录像照片</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+  background-color: transparent;
+  color: #5a6a8a;
+  font-size: 15px;
+  padding: 16px 18px;
+  border: none;
+  border-bottom: 3px solid transparent;
+}
+QPushButton:hover {
+  color: #1a3a6a;
+  background-color: rgba(74,144,217,0.08);
+}
+QPushButton:checked {
+  color: #1a3a6a;
+  font-weight: bold;
+  border-bottom: 3px solid #4a90d9;
+}</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="tabAlarm">
+         <property name="text">
+          <string>报警信息</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+  background-color: transparent;
+  color: #5a6a8a;
+  font-size: 15px;
+  padding: 16px 18px;
+  border: none;
+  border-bottom: 3px solid transparent;
+}
+QPushButton:hover {
+  color: #1a3a6a;
+  background-color: rgba(74,144,217,0.08);
+}
+QPushButton:checked {
+  color: #1a3a6a;
+  font-weight: bold;
+  border-bottom: 3px solid #4a90d9;
+}</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="tabSettings">
+         <property name="text">
+          <string>系统管理</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+  background-color: transparent;
+  color: #5a6a8a;
+  font-size: 15px;
+  padding: 16px 18px;
+  border: none;
+  border-bottom: 3px solid transparent;
+}
+QPushButton:hover {
+  color: #1a3a6a;
+  background-color: rgba(74,144,217,0.08);
+}
+QPushButton:checked {
+  color: #1a3a6a;
+  font-weight: bold;
+  border-bottom: 3px solid #4a90d9;
+}</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="navRightSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <!-- User Info + Clock -->
+       <item>
+        <widget class="QWidget" name="userArea" native="true">
+         <layout class="QVBoxLayout" name="userLayout">
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>4</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="userRow">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="userIconLabel">
+              <property name="text">
+               <string>@</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background: transparent; font-size: 14px;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="userLabel">
+              <property name="text">
+               <string>当前登录：系统管理员</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">font-size: 13px; color: #5a6a8a; background: transparent;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="gearIcon">
+              <property name="text">
+               <string>~</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">font-size: 16px; color: #8a9aaa; background: transparent;</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="clockLabel">
+            <property name="text">
+             <string>----</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignVCenter</set>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font-size: 13px; color: #5a6a8a; background: transparent;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <!-- Stacked Widget (content pages) -->
+    <item>
+     <widget class="QStackedWidget" name="contentStack"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

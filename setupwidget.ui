@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SetupWidget</class>
+ <widget class="QScrollArea" name="SetupWidget">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>820</width><height>620</height></rect></property>
+  <property name="styleSheet"><string notr="true">QScrollArea { border: none; background: #f4f6f9; }</string></property>
+  <property name="widgetResizable"><bool>true</bool></property>
+  <widget class="QWidget" name="scrollContent">
+   <property name="styleSheet"><string notr="true">QWidget#scrollContent { background: #f4f6f9; }</string></property>
+   <layout class="QVBoxLayout" name="rootLayout">
+    <property name="leftMargin"><number>32</number></property>
+    <property name="topMargin"><number>20</number></property>
+    <property name="rightMargin"><number>32</number></property>
+    <property name="bottomMargin"><number>28</number></property>
+    <property name="spacing"><number>0</number></property>
+
+    <!-- 面包屑标题 -->
+    <item>
+     <widget class="QLabel" name="pageTitle">
+      <property name="text"><string>告警策略配置</string></property>
+      <property name="styleSheet"><string notr="true">QLabel{font-size:18px;font-weight:bold;color:#1a3a6a;margin-bottom:4px;background:transparent;}</string></property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="pageDesc">
+      <property name="text"><string>配置告警检测项、布防策略及TTS语音播报参数</string></property>
+      <property name="styleSheet"><string notr="true">QLabel{font-size:13px;color:#8a9aaa;margin-bottom:18px;background:transparent;}</string></property>
+     </widget>
+    </item>
+
+    <!-- ====== 卡片1：检测项配置 ====== -->
+    <item>
+     <widget class="QFrame" name="cardDetect">
+      <property name="styleSheet"><string notr="true">QFrame#cardDetect{background:#ffffff;border:1px solid #dde3ee;border-radius:8px;}</string></property>
+      <layout class="QVBoxLayout" name="detectCardLayout">
+       <property name="leftMargin"><number>0</number></property><property name="topMargin"><number>0</number></property>
+       <property name="rightMargin"><number>0</number></property><property name="bottomMargin"><number>0</number></property>
+       <property name="spacing"><number>0</number></property>
+       <item>
+        <widget class="QFrame" name="detectHeader">
+         <property name="styleSheet"><string notr="true">QFrame#detectHeader{background:#e8f0fc;border-top-left-radius:8px;border-top-right-radius:8px;min-height:40px;max-height:40px;}</string></property>
+         <layout class="QHBoxLayout" name="detectHeaderLayout">
+          <property name="leftMargin"><number>16</number></property><property name="topMargin"><number>0</number></property>
+          <property name="rightMargin"><number>16</number></property><property name="bottomMargin"><number>0</number></property>
+          <item><widget class="QLabel" name="detectTitle"><property name="text"><string>检测项配置</string></property><property name="styleSheet"><string notr="true">font-size:15px;font-weight:bold;color:#2c3e50;background:transparent;</string></property></widget></item>
+          <item><spacer name="detectHSpacer"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item>
+          <item><widget class="QPushButton" name="btnSelectAll"><property name="text"><string>全选</string></property><property name="styleSheet"><string notr="true">QPushButton{background:transparent;color:#4a90d9;border:none;font-size:13px;padding:2px 8px;}QPushButton:hover{color:#2a6ab8;}</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="detectBodyLayout">
+         <property name="leftMargin"><number>20</number></property><property name="topMargin"><number>14</number></property>
+         <property name="rightMargin"><number>20</number></property><property name="bottomMargin"><number>14</number></property>
+         <property name="spacing"><number>32</number></property>
+         <item>
+          <layout class="QVBoxLayout" name="detectCol1"><property name="spacing"><number>8</number></property>
+           <item><widget class="QCheckBox" name="ckMotion"><property name="text"><string>运动检测</string></property></widget></item>
+           <item><widget class="QCheckBox" name="ckCover"><property name="text"><string>画面遮挡</string></property><property name="styleSheet"><string notr="true">QCheckBox{font-weight:bold;color:#d93025;}</string></property></widget></item>
+           <item><widget class="QCheckBox" name="ckIntrude"><property name="text"><string>区域入侵</string></property><property name="styleSheet"><string notr="true">QCheckBox{font-weight:bold;color:#d93025;}</string></property></widget></item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="detectCol2"><property name="spacing"><number>8</number></property>
+           <item><widget class="QCheckBox" name="ckStorage"><property name="text"><string>存储告警</string></property></widget></item>
+           <item><widget class="QCheckBox" name="ckFace"><property name="text"><string>人脸识别</string></property></widget></item>
+          </layout>
+         </item>
+         <item><spacer name="detectBodySpacer"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+
+    <!-- 卡片间距 -->
+    <item><spacer name="sp1"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>16</height></size></property></spacer></item>
+
+    <!-- ====== 卡片2：联动与布防设置 ====== -->
+    <item>
+     <widget class="QFrame" name="cardRule">
+      <property name="styleSheet"><string notr="true">QFrame#cardRule{background:#ffffff;border:1px solid #dde3ee;border-radius:8px;}</string></property>
+      <layout class="QVBoxLayout" name="ruleCardLayout">
+       <property name="leftMargin"><number>0</number></property><property name="topMargin"><number>0</number></property>
+       <property name="rightMargin"><number>0</number></property><property name="bottomMargin"><number>0</number></property><property name="spacing"><number>0</number></property>
+       <item>
+        <widget class="QFrame" name="ruleHeader">
+         <property name="styleSheet"><string notr="true">QFrame#ruleHeader{background:#e8f0fc;border-top-left-radius:8px;border-top-right-radius:8px;min-height:40px;max-height:40px;}</string></property>
+         <layout class="QHBoxLayout" name="ruleHeaderLayout">
+          <property name="leftMargin"><number>16</number></property><property name="rightMargin"><number>16</number></property>
+          <item><widget class="QLabel" name="ruleTitle"><property name="text"><string>联动与布防设置</string></property><property name="styleSheet"><string notr="true">font-size:15px;font-weight:bold;color:#2c3e50;background:transparent;</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QFormLayout" name="ruleBodyLayout">
+         <property name="leftMargin"><number>20</number></property><property name="topMargin"><number>18</number></property>
+         <property name="rightMargin"><number>20</number></property><property name="bottomMargin"><number>18</number></property>
+         <property name="horizontalSpacing"><number>20</number></property>
+         <property name="verticalSpacing"><number>16</number></property>
+         <item row="0" column="0"><widget class="QLabel" name="lblLink"><property name="text"><string>联动方式</string></property><property name="minimumSize"><size><width>90</width><height>0</height></size></property></widget></item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="linkCombo">
+           <item><property name="text"><string>无联动</string></property></item>
+           <item><property name="text"><string>声光报警</string></property></item>
+           <item><property name="text"><string>自动录像</string></property></item>
+           <item><property name="text"><string>消息推送</string></property></item>
+          </widget>
+         </item>
+         <item row="1" column="0"><widget class="QLabel" name="lblTime"><property name="text"><string>布防时间段</string></property></widget></item>
+         <item row="1" column="1">
+          <layout class="QHBoxLayout" name="timeLayout"><property name="spacing"><number>10</number></property>
+           <item><widget class="QTimeEdit" name="timeStart"><property name="displayFormat"><string>HH:mm</string></property></widget></item>
+           <item><widget class="QLabel" name="lblTo"><property name="text"><string>至</string></property><property name="styleSheet"><string notr="true">color:#666;font-size:14px;</string></property></widget></item>
+           <item><widget class="QTimeEdit" name="timeEnd"><property name="displayFormat"><string>HH:mm</string></property></widget></item>
+           <item><spacer name="timeSpacer"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+
+    <!-- 卡片间距 -->
+    <item><spacer name="sp2"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>16</height></size></property></spacer></item>
+
+    <!-- ====== 卡片3：TTS语音播报参数 ====== -->
+    <item>
+     <widget class="QFrame" name="cardTts">
+      <property name="styleSheet"><string notr="true">QFrame#cardTts{background:#ffffff;border:1px solid #dde3ee;border-radius:8px;}</string></property>
+      <layout class="QVBoxLayout" name="ttsCardLayout">
+       <property name="leftMargin"><number>0</number></property><property name="topMargin"><number>0</number></property>
+       <property name="rightMargin"><number>0</number></property><property name="bottomMargin"><number>0</number></property><property name="spacing"><number>0</number></property>
+       <item>
+        <widget class="QFrame" name="ttsHeader">
+         <property name="styleSheet"><string notr="true">QFrame#ttsHeader{background:#e8f0fc;border-top-left-radius:8px;border-top-right-radius:8px;min-height:40px;max-height:40px;}</string></property>
+         <layout class="QHBoxLayout" name="ttsHeaderLayout">
+          <property name="leftMargin"><number>16</number></property><property name="rightMargin"><number>16</number></property>
+          <item><widget class="QLabel" name="ttsTitle"><property name="text"><string>TTS语音播报参数</string></property><property name="styleSheet"><string notr="true">font-size:15px;font-weight:bold;color:#2c3e50;background:transparent;</string></property></widget></item>
+          <item><spacer name="ttsHSpacer"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item>
+          <item><widget class="QPushButton" name="ttsResetBt"><property name="text"><string>恢复默认</string></property><property name="styleSheet"><string notr="true">QPushButton{background:transparent;color:#8a9aaa;border:1px solid #dde3ee;border-radius:4px;font-size:12px;padding:2px 10px;}QPushButton:hover{color:#4a90d9;border-color:#4a90d9;}</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QFormLayout" name="ttsBodyLayout">
+         <property name="leftMargin"><number>20</number></property><property name="topMargin"><number>18</number></property>
+         <property name="rightMargin"><number>20</number></property><property name="bottomMargin"><number>18</number></property>
+         <property name="horizontalSpacing"><number>20</number></property>
+         <property name="verticalSpacing"><number>14</number></property>
+         <!-- 串口端口 -->
+         <item row="0" column="0"><widget class="QLabel" name="ttsPortLabel"><property name="text"><string>串口端口</string></property><property name="minimumSize"><size><width>100</width><height>0</height></size></property></widget></item>
+         <item row="0" column="1"><widget class="QLineEdit" name="ttsPort"><property name="text"><string>/dev/ttySAC2</string></property><property name="maximumSize"><size><width>220</width><height>16777215</height></size></property></widget></item>
+         <!-- 波特率 -->
+         <item row="1" column="0"><widget class="QLabel" name="ttsBaudLabel"><property name="text"><string>波特率</string></property></widget></item>
+         <item row="1" column="1"><widget class="QComboBox" name="ttsBaud"><item><property name="text"><string>4800</string></property></item><item><property name="text"><string>9600</string></property></item><item><property name="text"><string>57600</string></property></item><item><property name="text"><string>115200</string></property></item><property name="maximumSize"><size><width>160</width><height>16777215</height></size></property></widget></item>
+         <!-- 发音人 -->
+         <item row="2" column="0"><widget class="QLabel" name="ttsSpeakerLabel"><property name="text"><string>发音人</string></property></widget></item>
+         <item row="2" column="1"><widget class="QComboBox" name="ttsSpeaker"><item><property name="text"><string>m3 (女声)</string></property></item><item><property name="text"><string>m51 (男声)</string></property></item><item><property name="text"><string>m54 (唐老鸭)</string></property></item><item><property name="text"><string>m55 (小燕子)</string></property></item><property name="maximumSize"><size><width>180</width><height>16777215</height></size></property></widget></item>
+         <!-- 音量 -->
+         <item row="3" column="0"><widget class="QLabel" name="ttsVolumeLabel"><property name="text"><string>音量 (0-10)</string></property></widget></item>
+         <item row="3" column="1"><widget class="QComboBox" name="ttsVolume"><item><property name="text"><string>1</string></property></item><item><property name="text"><string>2</string></property></item><item><property name="text"><string>3</string></property></item><item><property name="text"><string>4</string></property></item><item><property name="text"><string>5</string></property></item><item><property name="text"><string>6</string></property></item><item><property name="text"><string>7</string></property></item><item><property name="text"><string>8</string></property></item><item><property name="text"><string>9</string></property></item><item><property name="text"><string>10</string></property></item><property name="maximumSize"><size><width>120</width><height>16777215</height></size></property></widget></item>
+         <!-- 语速 -->
+         <item row="4" column="0"><widget class="QLabel" name="ttsSpeedLabel"><property name="text"><string>语速 (0-10)</string></property></widget></item>
+         <item row="4" column="1"><widget class="QComboBox" name="ttsSpeed"><item><property name="text"><string>1</string></property></item><item><property name="text"><string>2</string></property></item><item><property name="text"><string>3</string></property></item><item><property name="text"><string>4</string></property></item><item><property name="text"><string>5</string></property></item><item><property name="text"><string>6</string></property></item><item><property name="text"><string>7</string></property></item><item><property name="text"><string>8</string></property></item><item><property name="text"><string>9</string></property></item><item><property name="text"><string>10</string></property></item><property name="maximumSize"><size><width>120</width><height>16777215</height></size></property></widget></item>
+         <!-- 循环播报 -->
+         <item row="5" column="0"><widget class="QCheckBox" name="ttsLoopEnabled"><property name="text"><string>循环播报</string></property></widget></item>
+         <item row="5" column="1"><widget class="QLabel" name="ttsLoopHint"><property name="text"><string>勾选后告警语音将按设定次数重复播报</string></property><property name="styleSheet"><string notr="true">color:#8a9aaa;font-size:12px;</string></property></widget></item>
+         <!-- 循环播报次数 -->
+         <item row="6" column="0"><widget class="QLabel" name="ttsLoopCountLabel"><property name="text"><string>循环播报次数</string></property></widget></item>
+         <item row="6" column="1"><widget class="QSpinBox" name="ttsLoopCount"><property name="minimum"><number>1</number></property><property name="maximum"><number>20</number></property><property name="value"><number>2</number></property><property name="maximumSize"><size><width>120</width><height>16777215</height></size></property></widget></item>
+         <!-- 循环间隔 -->
+         <item row="7" column="0"><widget class="QLabel" name="ttsLoopIntervalLabel"><property name="text"><string>循环间隔(秒)</string></property></widget></item>
+         <item row="7" column="1"><widget class="QSpinBox" name="ttsLoopInterval"><property name="minimum"><number>3</number></property><property name="maximum"><number>120</number></property><property name="value"><number>10</number></property><property name="maximumSize"><size><width>120</width><height>16777215</height></size></property></widget></item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+
+    <!-- 卡片间距 -->
+    <item><spacer name="sp3"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>20</height></size></property></spacer></item>
+
+    <!-- ====== 底部操作栏 ====== -->
+    <item>
+     <widget class="QFrame" name="actionBar">
+      <property name="styleSheet"><string notr="true">QFrame#actionBar{background:#ffffff;border:1px solid #dde3ee;border-radius:8px;min-height:56px;max-height:56px;}</string></property>
+      <layout class="QHBoxLayout" name="actionLayout">
+       <property name="leftMargin"><number>20</number></property><property name="topMargin"><number>0</number></property>
+       <property name="rightMargin"><number>20</number></property><property name="bottomMargin"><number>0</number></property>
+       <item><spacer name="actionSpacer"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item>
+       <item><widget class="QPushButton" name="resetBt"><property name="text"><string>重置</string></property><property name="minimumSize"><size><width>100</width><height>36</height></size></property></widget></item>
+       <item><widget class="QPushButton" name="saveBt"><property name="text"><string>保存配置</string></property><property name="minimumSize"><size><width>120</width><height>36</height></size></property></widget></item>
+      </layout>
+     </widget>
+    </item>
+
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

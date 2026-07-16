@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AlarmWidget</class>
+ <widget class="QWidget" name="AlarmWidget">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>960</width><height>640</height></rect></property>
+  <property name="styleSheet"><string notr="true">
+QWidget#AlarmWidget { background-color: #f8f9fc; font-family: "Microsoft YaHei",sans-serif; }
+
+QFrame#sideBar { background: #ffffff; border: 1px solid #DDE3EE; border-radius: 8px; }
+QWidget#sideTitleBar { background-color: #E8F0FC; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom: 1px solid #DDE3EE; }
+QLabel#sideTitle { color: #333333; font-size: 14px; font-weight: bold; background: transparent; }
+QLabel#badgeTotal { background: #D93025; color: #ffffff; font-size: 10px; font-weight: bold; border-radius: 9px; min-width: 18px; min-height: 18px; max-width: 18px; max-height: 18px; }
+
+QPushButton#catBtn1, QPushButton#catBtn2, QPushButton#catBtn3, QPushButton#catBtn4, QPushButton#catBtn5 {
+  background: transparent; border: none; border-left: 3px solid transparent;
+  text-align: left; font-size: 13px; color: #333333; padding: 10px 12px; border-radius: 4px;
+}
+QPushButton#catBtn1:hover, QPushButton#catBtn2:hover, QPushButton#catBtn3:hover, QPushButton#catBtn4:hover, QPushButton#catBtn5:hover {
+  background: #f0f4f8;
+}
+QPushButton#catBtn1[selected=true], QPushButton#catBtn2[selected=true], QPushButton#catBtn3[selected=true],
+QPushButton#catBtn4[selected=true], QPushButton#catBtn5[selected=true] {
+  background: rgba(64,123,255,0.10); border-left: 3px solid #407BFF; font-weight: 600; color: #1a3a6a;
+}
+
+QLabel#badge1, QLabel#badge2 { background: #D93025; color: #ffffff; font-size: 10px; font-weight: bold; border-radius: 9px; min-width: 18px; min-height: 18px; max-width: 18px; max-height: 18px; }
+QLabel#badge3, QLabel#badge4 { background: #F29927; color: #ffffff; font-size: 10px; font-weight: bold; border-radius: 9px; min-width: 18px; min-height: 18px; max-width: 18px; max-height: 18px; }
+QLabel#badge5 { background: #2774D9; color: #ffffff; font-size: 10px; font-weight: bold; border-radius: 9px; min-width: 18px; min-height: 18px; max-width: 18px; max-height: 18px; }
+
+
+QFrame#mainArea { background: #ffffff; border: 1px solid #DDE3EE; border-radius: 8px; }
+QWidget#mainTitleBar { background-color: #E8F0FC; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom: 1px solid #DDE3EE; }
+QLabel#mainTitle { color: #333333; font-size: 14px; font-weight: bold; background: transparent; }
+QLabel#countText { color: #666666; font-size: 12px; background: transparent; }
+
+QFrame#filterBar { background: #ffffff; border-bottom: 1px solid #f0f0f0; }
+QLabel#timeLabel, QLabel#levelLabel { font-size: 12px; color: #666666; background: transparent; }
+QComboBox#timeCombo, QComboBox#levelCombo, QComboBox#pageSizeCombo { font-size: 12px; }
+QLineEdit#keywordEdit { font-size: 12px; }
+
+QPushButton#searchBt { background-color: #407BFF; color: white; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: bold; }
+QPushButton#searchBt:hover { background-color: #3570e5; }
+QPushButton#refreshBt { background-color: #E8F0FC; color: #333333; border: 1px solid #DDE3EE; border-radius: 4px; padding: 6px 12px; font-size: 12px; }
+QPushButton#refreshBt:hover { background-color: #d0ddf0; }
+QPushButton#exportBt { background-color: #ffffff; color: #407BFF; border: 1px solid #407BFF; border-radius: 4px; padding: 6px 12px; font-size: 12px; }
+QPushButton#exportBt:hover { background-color: #E8F0FC; }
+
+QHeaderView::section { background: #E8F0FC; color: #333333; font-size: 13px; font-weight: bold; border: none; border-bottom: 1px solid #DDE3EE; padding: 10px 12px; }
+QTableWidget#eventTable { background: #ffffff; border: none; font-size: 13px; color: #333333; gridline-color: #f0f0f0; }
+QTableWidget#eventTable::item { padding: 8px 12px; border-bottom: 1px solid #f5f5f5; }
+QTableWidget#eventTable::item:hover { background: #f8f9fb; }
+QTableWidget#eventTable::item:selected { background: #c8ddf8; color: #333333; }
+
+QLabel#emptyIcon { background: transparent; font-size: 48px; }
+QLabel#emptyLabel { color: #999999; font-size: 14px; background: transparent; border: none; }
+
+QFrame#pageBar { background: #fafbfc; border-top: 1px solid #f0f0f0; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
+QPushButton#prevBt, QPushButton#nextBt {
+  background: #ffffff; color: #333333; border: 1px solid #DDE3EE; border-radius: 4px; padding: 4px 12px; font-size: 12px;
+}
+QPushButton#prevBt:hover, QPushButton#nextBt:hover { background: #E8F0FC; border-color: #407BFF; }
+QPushButton#prevBt:disabled, QPushButton#nextBt:disabled { color: #cccccc; background: #f5f5f5; }
+QLabel#pageLabel { color: #666666; font-size: 12px; }
+QLabel#pageSizeLabel { color: #666666; font-size: 12px; }
+
+QPushButton#ackBt { background-color: #407BFF; color: white; border: none; border-radius: 6px; padding: 8px 24px; font-size: 13px; font-weight: bold; }
+QPushButton#ackBt:hover { background-color: #3570e5; }
+QPushButton#clearBt { background-color: #ffffff; color: #D93025; border: 1px solid #D93025; border-radius: 6px; padding: 8px 24px; font-size: 13px; }
+QPushButton#clearBt:hover { background-color: #fef0f0; }
+  </string></property>
+
+  <layout class="QVBoxLayout" name="outerLayout">
+   <property name="spacing"><number>12</number></property>
+   <property name="leftMargin"><number>12</number></property>
+   <property name="topMargin"><number>12</number></property>
+   <property name="rightMargin"><number>12</number></property>
+   <property name="bottomMargin"><number>12</number></property>
+
+   <!-- Horizontal: sidebar + main -->
+   <item>
+    <layout class="QHBoxLayout" name="rootLayout">
+     <property name="spacing"><number>12</number></property>
+
+     <!-- ========== SIDEBAR ========== -->
+     <item>
+      <widget class="QFrame" name="sideBar">
+       <property name="minimumSize"><size><width>180</width><height>0</height></size></property>
+       <property name="maximumSize"><size><width>180</width><height>16777215</height></size></property>
+       <layout class="QVBoxLayout" name="sideLayout">
+        <property name="spacing"><number>0</number></property>
+        <property name="leftMargin"><number>0</number></property>
+        <property name="topMargin"><number>0</number></property>
+        <property name="rightMargin"><number>0</number></property>
+        <property name="bottomMargin"><number>0</number></property>
+
+        <!-- Title bar -->
+        <item>
+         <widget class="QWidget" name="sideTitleBar" native="true">
+          <property name="minimumSize"><size><width>0</width><height>40</height></size></property>
+          <property name="maximumSize"><size><width>16777215</width><height>40</height></size></property>
+          <layout class="QHBoxLayout" name="sideTitleLayout">
+           <property name="leftMargin"><number>12</number></property>
+           <property name="rightMargin"><number>8</number></property>
+           <property name="topMargin"><number>0</number></property>
+           <property name="bottomMargin"><number>0</number></property>
+           <item>
+            <widget class="QLabel" name="sideTitle">
+             <property name="text"><string>报警分类</string></property>
+            </widget>
+           </item>
+           <item>
+            <spacer><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="badgeTotal">
+             <property name="text"><string>0</string></property>
+             <property name="alignment"><set>Qt::AlignCenter</set></property>
+             <property name="minimumSize"><size><width>18</width><height>18</height></size></property>
+             <property name="toolTip"><string>待处理告警总数</string></property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+
+        <!-- Row 1: 画面遮挡 -->
+        <item>
+         <widget class="QWidget" name="catRow1" native="true">
+          <property name="minimumSize"><size><width>0</width><height>44</height></size></property>
+          <property name="maximumSize"><size><width>16777215</width><height>44</height></size></property>
+          <layout class="QHBoxLayout" name="catRow1Layout">
+           <property name="spacing"><number>0</number></property>
+           <property name="leftMargin"><number>0</number></property>
+           <property name="topMargin"><number>2</number></property>
+           <property name="rightMargin"><number>8</number></property>
+           <property name="bottomMargin"><number>2</number></property>
+           <item>
+            <widget class="QPushButton" name="catBtn1">
+             <property name="text"><string>   画面遮挡</string></property>
+             <property name="toolTip"><string>摄像头被遮挡时触发告警</string></property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="badge1">
+             <property name="text"><string>0</string></property>
+             <property name="alignment"><set>Qt::AlignCenter</set></property>
+             <property name="minimumSize"><size><width>32</width><height>22</height></size></property>
+             <property name="maximumSize"><size><width>32</width><height>22</height></size></property>
+             <property name="toolTip"><string>待处理告警数量</string></property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+
+        <!-- Row 2: 区域入侵 -->
+        <item>
+         <widget class="QWidget" name="catRow2" native="true">
+          <property name="minimumSize"><size><width>0</width><height>44</height></size></property>
+          <property name="maximumSize"><size><width>16777215</width><height>44</height></size></property>
+          <layout class="QHBoxLayout" name="catRow2Layout">
+           <property name="spacing"><number>0</number></property>
+           <property name="leftMargin"><number>0</number></property>
+           <property name="topMargin"><number>2</number></property>
+           <property name="rightMargin"><number>8</number></property>
+           <property name="bottomMargin"><number>2</number></property>
+           <item>
+            <widget class="QPushButton" name="catBtn2">
+             <property name="text"><string>   区域入侵</string></property>
+             <property name="toolTip"><string>检测到区域入侵时触发告警</string></property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="badge2">
+             <property name="text"><string>0</string></property>
+             <property name="alignment"><set>Qt::AlignCenter</set></property>
+             <property name="minimumSize"><size><width>32</width><height>22</height></size></property>
+             <property name="maximumSize"><size><width>32</width><height>22</height></size></property>
+             <property name="toolTip"><string>待处理告警数量</string></property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+
+        <!-- Row 3: 运动检测 -->
+        <item>
+         <widget class="QWidget" name="catRow3" native="true">
+          <property name="minimumSize"><size><width>0</width><height>44</height></size></property>
+          <property name="maximumSize"><size><width>16777215</width><height>44</height></size></property>
+          <layout class="QHBoxLayout" name="catRow3Layout">
+           <property name="spacing"><number>0</number></property>
+           <property name="leftMargin"><number>0</number></property>
+           <property name="topMargin"><number>2</number></property>
+           <property name="rightMargin"><number>8</number></property>
+           <property name="bottomMargin"><number>2</number></property>
+           <item>
+            <widget class="QPushButton" name="catBtn3">
+             <property name="text"><string>   运动检测</string></property>
+             <property name="toolTip"><string>检测到异常运动时触发告警</string></property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="badge3">
+             <property name="text"><string>0</string></property>
+             <property name="alignment"><set>Qt::AlignCenter</set></property>
+             <property name="minimumSize"><size><width>32</width><height>22</height></size></property>
+             <property name="maximumSize"><size><width>32</width><height>22</height></size></property>
+             <property name="toolTip"><string>待处理告警数量</string></property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+
+        <!-- Row 4: 存储告警 -->
+        <item>
+         <widget class="QWidget" name="catRow4" native="true">
+          <property name="minimumSize"><size><width>0</width><height>44</height></size></property>
+          <property name="maximumSize"><size><width>16777215</width><height>44</height></size></property>
+          <layout class="QHBoxLayout" name="catRow4Layout">
+           <property name="spacing"><number>0</number></property>
+           <property name="leftMargin"><number>0</number></property>
+           <property name="topMargin"><number>2</number></property>
+           <property name="rightMargin"><number>8</number></property>
+           <property name="bottomMargin"><number>2</number></property>
+           <item>
+            <widget class="QPushButton" name="catBtn4">
+             <property name="text"><string>   存储告警</string></property>
+             <property name="toolTip"><string>存储空间不足时触发告警</string></property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="badge4">
+             <property name="text"><string>0</string></property>
+             <property name="alignment"><set>Qt::AlignCenter</set></property>
+             <property name="minimumSize"><size><width>32</width><height>22</height></size></property>
+             <property name="maximumSize"><size><width>32</width><height>22</height></size></property>
+             <property name="toolTip"><string>待处理告警数量</string></property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+
+        <!-- Row 5: 人脸告警 -->
+        <item>
+         <widget class="QWidget" name="catRow5" native="true">
+          <property name="minimumSize"><size><width>0</width><height>44</height></size></property>
+          <property name="maximumSize"><size><width>16777215</width><height>44</height></size></property>
+          <layout class="QHBoxLayout" name="catRow5Layout">
+           <property name="spacing"><number>0</number></property>
+           <property name="leftMargin"><number>0</number></property>
+           <property name="topMargin"><number>2</number></property>
+           <property name="rightMargin"><number>8</number></property>
+           <property name="bottomMargin"><number>2</number></property>
+           <item>
+            <widget class="QPushButton" name="catBtn5">
+             <property name="text"><string>   人脸告警</string></property>
+             <property name="toolTip"><string>检测到未注册人脸时触发告警</string></property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="badge5">
+             <property name="text"><string>0</string></property>
+             <property name="alignment"><set>Qt::AlignCenter</set></property>
+             <property name="minimumSize"><size><width>32</width><height>22</height></size></property>
+             <property name="maximumSize"><size><width>32</width><height>22</height></size></property>
+             <property name="toolTip"><string>待处理告警数量</string></property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+
+        <!-- Spacer: push content to top, eliminate dead whitespace -->
+        <item>
+         <spacer>
+          <property name="orientation"><enum>Qt::Vertical</enum></property>
+          <property name="sizeHint"><size><width>20</width><height>0</height></size></property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </item>
+
+     <!-- ========== MAIN AREA ========== -->
+     <item>
+      <widget class="QFrame" name="mainArea">
+       <layout class="QVBoxLayout" name="mainLayout">
+        <property name="spacing"><number>0</number></property>
+        <property name="leftMargin"><number>0</number></property>
+        <property name="topMargin"><number>0</number></property>
+        <property name="rightMargin"><number>0</number></property>
+        <property name="bottomMargin"><number>0</number></property>
+
+        <!-- Title bar -->
+        <item>
+         <widget class="QWidget" name="mainTitleBar" native="true">
+          <property name="minimumSize"><size><width>0</width><height>40</height></size></property>
+          <property name="maximumSize"><size><width>16777215</width><height>40</height></size></property>
+          <layout class="QHBoxLayout" name="mainTitleLayout">
+           <property name="leftMargin"><number>14</number></property>
+           <property name="rightMargin"><number>14</number></property>
+           <property name="topMargin"><number>0</number></property>
+           <property name="bottomMargin"><number>0</number></property>
+           <item>
+            <widget class="QLabel" name="mainTitle">
+             <property name="text"><string>事件列表</string></property>
+            </widget>
+           </item>
+           <item>
+            <spacer><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="countText">
+             <property name="text"><string>共 0 条记录</string></property>
+             <property name="alignment"><set>Qt::AlignRight|Qt::AlignVCenter</set></property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+
+        <!-- Filter bar -->
+        <item>
+         <widget class="QFrame" name="filterBar">
+          <property name="minimumSize"><size><width>0</width><height>44</height></size></property>
+          <property name="maximumSize"><size><width>16777215</width><height>44</height></size></property>
+          <layout class="QHBoxLayout" name="filterLayout">
+           <property name="spacing"><number>8</number></property>
+           <property name="leftMargin"><number>12</number></property>
+           <property name="rightMargin"><number>12</number></property>
+           <property name="topMargin"><number>6</number></property>
+           <property name="bottomMargin"><number>6</number></property>
+           <item>
+            <widget class="QLabel" name="timeLabel"><property name="text"><string>时间:</string></property></widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="timeCombo">
+             <property name="minimumSize"><size><width>80</width><height>0</height></size></property>
+             <property name="toolTip"><string>按时间范围筛选告警</string></property>
+             <item><property name="text"><string>全部</string></property></item>
+             <item><property name="text"><string>今天</string></property></item>
+             <item><property name="text"><string>近7天</string></property></item>
+             <item><property name="text"><string>近30天</string></property></item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="keywordEdit">
+             <property name="minimumSize"><size><width>130</width><height>0</height></size></property>
+             <property name="placeholderText"><string>搜索关键词...</string></property>
+             <property name="toolTip"><string>按事件描述、类型搜索</string></property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="levelLabel"><property name="text"><string>等级:</string></property></widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="levelCombo">
+             <property name="minimumSize"><size><width>70</width><height>0</height></size></property>
+             <property name="toolTip"><string>按告警等级筛选</string></property>
+             <item><property name="text"><string>全部</string></property></item>
+             <item><property name="text"><string>紧急</string></property></item>
+             <item><property name="text"><string>重要</string></property></item>
+             <item><property name="text"><string>一般</string></property></item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="searchBt"><property name="text"><string>搜索</string></property></widget>
+           </item>
+           <item>
+            <spacer><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="exportBt">
+             <property name="text"><string>导出</string></property>
+             <property name="toolTip"><string>导出告警记录为CSV文件</string></property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="refreshBt"><property name="text"><string>刷新</string></property></widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+
+        <!-- Content: table + empty state stacked -->
+        <item>
+         <widget class="QStackedWidget" name="contentStack">
+          <!-- Page 0: event table -->
+          <widget class="QTableWidget" name="eventTable">
+           <property name="columnCount"><number>6</number></property>
+           <attribute name="horizontalHeaderDefaultSectionSize"><number>100</number></attribute>
+           <attribute name="horizontalHeaderStretchLastSection"><bool>false</bool></attribute>
+           <column><property name="text"><string>事件类型</string></property></column>
+           <column><property name="text"><string>等级</string></property></column>
+           <column><property name="text"><string>描述</string></property></column>
+           <column><property name="text"><string>触发时间</string></property></column>
+           <column><property name="text"><string>状态</string></property></column>
+           <column><property name="text"><string>缩略图</string></property></column>
+          </widget>
+          <!-- Page 1: empty state -->
+          <widget class="QWidget" name="emptyPage">
+           <layout class="QVBoxLayout" name="emptyLayout">
+            <property name="spacing"><number>12</number></property>
+            <item>
+             <spacer><property name="orientation"><enum>Qt::Vertical</enum></property></spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="emptyIcon">
+              <property name="text"><string>📋</string></property>
+              <property name="alignment"><set>Qt::AlignCenter</set></property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="emptyLabel">
+              <property name="text"><string>暂无报警记录</string></property>
+              <property name="alignment"><set>Qt::AlignCenter</set></property>
+             </widget>
+            </item>
+            <item>
+             <spacer><property name="orientation"><enum>Qt::Vertical</enum></property></spacer>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+
+        <!-- Pagination bar -->
+        <item>
+         <widget class="QFrame" name="pageBar">
+          <property name="minimumSize"><size><width>0</width><height>40</height></size></property>
+          <property name="maximumSize"><size><width>16777215</width><height>40</height></size></property>
+          <layout class="QHBoxLayout" name="pageLayout">
+           <property name="leftMargin"><number>12</number></property>
+           <property name="rightMargin"><number>12</number></property>
+           <property name="topMargin"><number>0</number></property>
+           <property name="bottomMargin"><number>0</number></property>
+           <item>
+            <spacer><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="prevBt"><property name="text"><string>上一页</string></property></widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="pageLabel">
+             <property name="text"><string>第 1/1 页</string></property>
+             <property name="alignment"><set>Qt::AlignCenter</set></property>
+             <property name="minimumSize"><size><width>80</width><height>0</height></size></property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="nextBt"><property name="text"><string>下一页</string></property></widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="pageSizeLabel"><property name="text"><string>每页</string></property></widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="pageSizeCombo">
+             <property name="minimumSize"><size><width>70</width><height>0</height></size></property>
+             <item><property name="text"><string>20条</string></property></item>
+             <item><property name="text"><string>50条</string></property></item>
+             <item><property name="text"><string>100条</string></property></item>
+            </widget>
+           </item>
+           <item>
+            <spacer><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+
+   <!-- Bottom action buttons -->
+   <item>
+    <layout class="QHBoxLayout" name="bottomLayout">
+     <item>
+      <spacer><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="ackBt">
+       <property name="text"><string>标记已处理</string></property>
+       <property name="minimumSize"><size><width>140</width><height>34</height></size></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="clearBt">
+       <property name="text"><string>清除告警</string></property>
+       <property name="minimumSize"><size><width>100</width><height>34</height></size></property>
+       <property name="toolTip"><string>清除所有已处理的告警记录</string></property>
+      </widget>
+     </item>
+     <item>
+      <spacer><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FileManagerWidget</class>
+ <widget class="QWidget" name="FileManagerWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <layout class="QHBoxLayout" name="rootLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <!-- Left Sidebar -->
+   <item>
+    <widget class="QWidget" name="sidebar" native="true">
+     <property name="minimumWidth">
+      <number>180</number>
+     </property>
+     <property name="maximumWidth">
+      <number>180</number>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f2f5; border-right: 1px solid #dce0e6;</string>
+     </property>
+     <layout class="QVBoxLayout" name="sideLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="sideTitle">
+        <property name="text">
+         <string>  文件管理</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-size: 16px; font-weight: bold; color: #2c3e50; padding: 20px 16px 12px 16px; background: transparent;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="videoBtn">
+        <property name="text">
+         <string>录  像</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="minimumHeight">
+         <number>48</number>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+  background-color: transparent;
+  color: #6a7a8a;
+  font-size: 15px;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 0;
+}
+QPushButton:hover {
+  background-color: #e0e5ed;
+  color: #4a6a8a;
+}
+QPushButton:checked {
+  background-color: #d4e4f7;
+  color: #1a3a6a;
+  font-weight: bold;
+}</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="photoBtn">
+        <property name="text">
+         <string>图  片</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="minimumHeight">
+         <number>48</number>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+  background-color: transparent;
+  color: #6a7a8a;
+  font-size: 15px;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 0;
+}
+QPushButton:hover {
+  background-color: #e0e5ed;
+  color: #4a6a8a;
+}
+QPushButton:checked {
+  background-color: #d4e4f7;
+  color: #1a3a6a;
+  font-weight: bold;
+}</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="searchBtn">
+        <property name="text">
+         <string>搜  索</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="minimumHeight">
+         <number>48</number>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+  background-color: transparent;
+  color: #6a7a8a;
+  font-size: 15px;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 0;
+}
+QPushButton:hover {
+  background-color: #e0e5ed;
+  color: #4a6a8a;
+}
+QPushButton:checked {
+  background-color: #d4e4f7;
+  color: #1a3a6a;
+  font-weight: bold;
+}</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="sideBottomSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>300</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <!-- Right Content Area -->
+   <item>
+    <widget class="QWidget" name="contentArea" native="true">
+     <layout class="QVBoxLayout" name="contentLayout">
+      <property name="leftMargin">
+       <number>16</number>
+      </property>
+      <property name="topMargin">
+       <number>16</number>
+      </property>
+      <property name="rightMargin">
+       <number>16</number>
+      </property>
+      <property name="bottomMargin">
+       <number>16</number>
+      </property>
+      <property name="spacing">
+       <number>12</number>
+      </property>
+      <!-- Scroll area with grid -->
+      <item>
+       <widget class="QScrollArea" name="scrollArea">
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QScrollArea { border: none; background: transparent; }</string>
+        </property>
+       </widget>
+      </item>
+      <!-- Pagination bar -->
+      <item>
+       <widget class="QWidget" name="pageBar" native="true">
+        <property name="fixedHeight">
+         <number>50</number>
+        </property>
+        <layout class="QHBoxLayout" name="pageLayout">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <spacer name="pageLeftSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="prevBtn">
+           <property name="text">
+            <string>上一页</string>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="minimumHeight">
+            <number>36</number>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+  background-color: #e8f0fe;
+  color: #4a90d9;
+  border: 1px solid #b8d0ea;
+  border-radius: 4px;
+  font-size: 14px;
+  padding: 8px 20px;
+}
+QPushButton:hover {
+  background-color: #d4e4f7;
+  border-color: #4a90d9;
+}
+QPushButton:disabled {
+  color: #b0b8c4;
+  background-color: #f0f2f5;
+  border-color: #dce0e6;
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="pageLabel">
+           <property name="text">
+            <string>第 1 / 1 页</string>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: #5a6a8a; font-size: 14px; padding: 0 8px; background: transparent;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="nextBtn">
+           <property name="text">
+            <string>下一页</string>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="minimumHeight">
+            <number>36</number>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+  background-color: #e8f0fe;
+  color: #4a90d9;
+  border: 1px solid #b8d0ea;
+  border-radius: 4px;
+  font-size: 14px;
+  padding: 8px 20px;
+}
+QPushButton:hover {
+  background-color: #d4e4f7;
+  border-color: #4a90d9;
+}
+QPushButton:disabled {
+  color: #b0b8c4;
+  background-color: #f0f2f5;
+  border-color: #dce0e6;
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="pageMidSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>16</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="searchPageBtn">
+           <property name="text">
+            <string>搜索</string>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="minimumHeight">
+            <number>36</number>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+  background-color: #4a90d9;
+  color: white;
+  border: 1px solid #3a7bc8;
+  border-radius: 4px;
+  font-size: 14px;
+  padding: 8px 20px;
+}
+QPushButton:hover {
+  background-color: #3a7bc8;
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="pageRightSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
